@@ -1,0 +1,2 @@
+D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.exe
+D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.pdb

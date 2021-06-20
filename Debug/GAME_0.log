@@ -1,0 +1,45 @@
+﻿  Core.cpp
+  Main.cpp
+  Shader.cpp
+  Window.cpp
+  Generating Code...
+Main.obj : error LNK2019: unresolved external symbol _glfwTerminate referenced in function _main
+Window.obj : error LNK2001: unresolved external symbol _glfwTerminate
+Main.obj : error LNK2019: unresolved external symbol _glfwSetErrorCallback referenced in function "void __cdecl setup_callbacks(struct GLFWwindow *)" (?setup_callbacks@@YAXPAUGLFWwindow@@@Z)
+Main.obj : error LNK2019: unresolved external symbol _glfwDestroyWindow referenced in function _main
+Main.obj : error LNK2019: unresolved external symbol _glfwWindowShouldClose referenced in function _main
+Main.obj : error LNK2019: unresolved external symbol _glfwSetWindowSizeCallback referenced in function "void __cdecl setup_callbacks(struct GLFWwindow *)" (?setup_callbacks@@YAXPAUGLFWwindow@@@Z)
+Main.obj : error LNK2019: unresolved external symbol _glfwSetKeyCallback referenced in function "void __cdecl setup_callbacks(struct GLFWwindow *)" (?setup_callbacks@@YAXPAUGLFWwindow@@@Z)
+Main.obj : error LNK2019: unresolved external symbol _glfwSetMouseButtonCallback referenced in function "void __cdecl setup_callbacks(struct GLFWwindow *)" (?setup_callbacks@@YAXPAUGLFWwindow@@@Z)
+Main.obj : error LNK2019: unresolved external symbol _glfwSetCursorPosCallback referenced in function "void __cdecl setup_callbacks(struct GLFWwindow *)" (?setup_callbacks@@YAXPAUGLFWwindow@@@Z)
+Shader.obj : error LNK2001: unresolved external symbol ___glewAttachShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewCompileShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewCreateProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewCreateShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewDeleteProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewDeleteShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewDetachShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetProgramInfoLog
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetProgramiv
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetShaderInfoLog
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetShaderiv
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetUniformLocation
+Shader.obj : error LNK2001: unresolved external symbol ___glewLinkProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewShaderSource
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform1f
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform1i
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform3fv
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniformMatrix4fv
+Shader.obj : error LNK2001: unresolved external symbol ___glewUseProgram
+Window.obj : error LNK2019: unresolved external symbol _glewInit@0 referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwWindowHint referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwCreateWindow referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwSetWindowShouldClose referenced in function "public: static void __cdecl Window::keyCallback(struct GLFWwindow *,int,int,int,int)" (?keyCallback@Window@@SAXPAUGLFWwindow@@HHHH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwPollEvents referenced in function "public: static void __cdecl Window::displayCallback(struct GLFWwindow *)" (?displayCallback@Window@@SAXPAUGLFWwindow@@@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwMakeContextCurrent referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwSwapBuffers referenced in function "public: static void __cdecl Window::displayCallback(struct GLFWwindow *)" (?displayCallback@Window@@SAXPAUGLFWwindow@@@Z)
+Window.obj : error LNK2019: unresolved external symbol _glfwSwapInterval referenced in function "public: static struct GLFWwindow * __cdecl Window::createWindow(int,int)" (?createWindow@Window@@SAPAUGLFWwindow@@HH@Z)
+D:\csHobby\opengl_folder\GAME_0\Dependencies\GLEW\lib\Release\x64\glew32s.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\csHobby\opengl_folder\GAME_0\Dependencies\GLFW\lib-vc2019\glfw3.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\csHobby\opengl_folder\GAME_0\Debug\GAME_0.exe : fatal error LNK1120: 36 unresolved externals
