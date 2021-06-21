@@ -1,7 +1,7 @@
 #ifndef _WINDOW_H_
 #define _WINDOW_H_
 
-#include "Shader.h"
+#include "Renderer/Shader.h"
 #include "Core.h"
 
 class Window

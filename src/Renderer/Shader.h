@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "Core.h"
+#include "../Core.h"
 
 enum ShaderType { vertex, fragment };
 

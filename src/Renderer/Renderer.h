@@ -1,7 +1,7 @@
 #ifndef _RENDERER_H_
 #define _RENDERER_H_
 
-#include "Core.h"
+#include "../Core.h"
 #include "Shader.h"
 
 class Renderer {

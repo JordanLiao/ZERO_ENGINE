@@ -153,22 +153,22 @@
   <ItemGroup>
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\ResourceLoaders.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Renderer\Mesh.cpp" />
+    <ClCompile Include="src\Renderer\Object.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\ResourceLoaders.cpp" />
+    <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core.h" />
-    <ClInclude Include="src\Mesh.h" />
-    <ClInclude Include="src\Object.h" />
-    <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\ResourceManager.h" />
-    <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\ResourceLoaders.h" />
-    <ClInclude Include="src\Resources.h" />
+    <ClInclude Include="src\Renderer\Mesh.h" />
+    <ClInclude Include="src\Renderer\Object.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Renderer\ResourceManager.h" />
+    <ClInclude Include="src\Renderer\Shader.h" />
+    <ClInclude Include="src\Renderer\ResourceLoaders.h" />
+    <ClInclude Include="src\Renderer\Resources.h" />
     <ClInclude Include="src\tools\stb_image.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>

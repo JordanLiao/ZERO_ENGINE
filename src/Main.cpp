@@ -7,7 +7,8 @@
 #include "Window.h"
 #include "Core.h"
 
-#define STB_IMAGE_IMPLEMENTATION
+#include "Renderer/ResourceLoaders.h"
+#include <unordered_map>
 
 void error_callback(int error, const char* description)
 {
@@ -44,9 +45,15 @@ void print_versions()
 	std::cout << "OpenGL version supported: " << glGetString(GL_VERSION) << " \n"<<std::endl;
 }
 
+void beginTests() {
+	std::unordered_map<std::string, Resources::Material*> * map = ResourceLoaders::loadMaterialMap("Assets/lowpolypine.mtl");
+	if(map != NULL)
+		std::cout << map->size() << std::endl;
+}
+
 int main(int argc, char* argv[])
 {
-	GLFWwindow* window = Window::createWindow(800, 600);
+	/*GLFWwindow* window = Window::createWindow(800, 600);	
 	if (!window) exit(EXIT_FAILURE);
 
 	print_versions();
@@ -68,5 +75,8 @@ int main(int argc, char* argv[])
 	Window::cleanUp();
 	glfwDestroyWindow(window);
 	glfwTerminate();
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);*/
+	
+	beginTests();
 }
+

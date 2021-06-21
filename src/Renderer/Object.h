@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Core.h"
+#include "../Core.h"
 #include "Mesh.h"
 #include "ResourceLoaders.h"
 
