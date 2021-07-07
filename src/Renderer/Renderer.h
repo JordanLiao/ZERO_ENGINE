@@ -3,12 +3,16 @@
 
 #include "../Core.h"
 #include "Shader.h"
+#include "Resources.h"
 
 class Renderer {
 private:
-
+	Shader* shader;
 public:
-	void draw(const GLuint vao, const Shader* shader) const;
+	Renderer();
+	~Renderer();
+	void draw(Resources::Material* mat, GLuint vao, int offset, int count);
+	void setShader(Shader * s);
 };
 
 #endif

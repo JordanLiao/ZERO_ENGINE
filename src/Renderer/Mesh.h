@@ -5,20 +5,17 @@
 #include "Resources.h"
 
 class Mesh {
-private:
-	std::string meshName;
-	GLuint vao;
-	GLuint vbo[3];
-	GLuint ebo;
-	std::string materialName;
-	Resources::Material* material;
-
 public:
+	std::string meshName;
+	Resources::Material* material;
+	int vertexOffset; //offset into vao to begin drawing this mesh
+	int size; //number of vertices this mesh has
 
+	Mesh(std::string& name, Resources::Material* mtl, int vertOff, int meshSize);
 	~Mesh();
-	GLuint getVao() const;
-	void bind() const;
-	void unbind() const;
+	std::string& getMeshName();
+	bool setMaterial(Resources::Material*);
+	Resources::Material* getMaterial();
 };
 
 #endif

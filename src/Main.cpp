@@ -7,7 +7,6 @@
 #include "Window.h"
 #include "Core.h"
 
-#include "Renderer/ResourceLoaders.h"
 #include <unordered_map>
 
 void error_callback(int error, const char* description)
@@ -46,9 +45,12 @@ void print_versions()
 }
 
 void beginTests() {
-	std::unordered_map<std::string, Resources::Material*> * map = ResourceLoaders::loadMaterialMap("Assets/lowpolypine.mtl");
+	/*std::unordered_map<std::string, Resources::Material*> * map = ResourceLoaders::loadMaterialMap("Assets/lowpolypine.mtl");
 	if(map != NULL)
 		std::cout << map->size() << std::endl;
+		*/
+	//std::string str("Assets/lowpolypine.mtl");
+	//std::cout << "end of test method." << std::endl;
 }
 
 int main(int argc, char* argv[])

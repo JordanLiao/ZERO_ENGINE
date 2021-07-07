@@ -2,8 +2,12 @@ d:\cshobby\opengl_folder\game_0\x64\debug\vc142.pdb
 d:\cshobby\opengl_folder\game_0\x64\debug\vc142.idb
 d:\cshobby\opengl_folder\game_0\x64\debug\window.obj
 d:\cshobby\opengl_folder\game_0\x64\debug\shader.obj
-d:\cshobby\opengl_folder\game_0\x64\debug\core.obj
+d:\cshobby\opengl_folder\game_0\x64\debug\resourceloaders.obj
+d:\cshobby\opengl_folder\game_0\x64\debug\renderer.obj
+d:\cshobby\opengl_folder\game_0\x64\debug\object.obj
+d:\cshobby\opengl_folder\game_0\x64\debug\mesh.obj
 d:\cshobby\opengl_folder\game_0\x64\debug\main.obj
+d:\cshobby\opengl_folder\game_0\x64\debug\core.obj
 d:\cshobby\opengl_folder\game_0\x64\debug\game_0.ilk
 d:\cshobby\opengl_folder\game_0\x64\debug\game_0.exe
 d:\cshobby\opengl_folder\game_0\x64\debug\game_0.pdb

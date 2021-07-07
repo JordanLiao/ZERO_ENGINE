@@ -15,23 +15,31 @@
 enum ShaderType { vertex, fragment };
 
 class Shader {
+	enum shader {
+		simpleModelShader,
+		phongShader
+	};
+
 private: 
 	GLuint programID;
 	std::unordered_map<std::string, GLint> uniformMap;
+	glm::mat4 *proj;
+	glm::mat4  *view;
 
 	//methods
 	GLuint LoadSingleShader(const char* shaderFilePath, ShaderType type);
 	GLint getUniformLocation(std::string&);
 
 public :
-	Shader(const char* vertex_file_path, const char* fragment_file_path);
+	Shader(const char* vertex_file_path, const char* fragment_file_path, glm::mat4* projMat,
+		glm::mat4* viewMat);
 	~Shader();
 	GLuint getId() const;
 	bool setUniformMat4(std::string&, glm::mat4);
 	bool setUniformVec3(std::string&, glm::vec3);
 	bool setUniform1I(std::string&, GLint);
 	bool setUniorm1F(std::string&, GLfloat);
-	void bind() const;
+	void bind();
 	void unbind() const;
 };
 

@@ -89,6 +89,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)src/tools;$(solutionDIr)Dependencies\GLFW\include;$(solutionDIr)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,6 +107,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)src/tools;$(solutionDIr)Dependencies\GLFW\include;$(solutionDIr)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +125,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)src/tools;$(solutionDIr)Dependencies\GLFW\include;$(solutionDIr)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +143,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)src/tools;$(solutionDIr)Dependencies\GLFW\include;$(solutionDIr)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,7 +160,7 @@
     <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Object.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Renderer\ResourceLoaders.cpp" />
+    <ClCompile Include="src\Renderer\ResourceManager.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -167,7 +171,6 @@
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
-    <ClInclude Include="src\Renderer\ResourceLoaders.h" />
     <ClInclude Include="src\Renderer\Resources.h" />
     <ClInclude Include="src\tools\stb_image.h" />
     <ClInclude Include="src\Window.h" />

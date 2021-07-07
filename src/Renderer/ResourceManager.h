@@ -3,10 +3,14 @@
 
 #include <unordered_map>
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "../Core.h"
-#include "ResourceLoaders.h"
 #include "Resources.h"
+#include "Mesh.h"
+#include "Object.h"
 
 class ResourceManager {
 private:
@@ -24,6 +28,11 @@ public:
 	bool loadMaterials();
 	void deleteTexture();
 	void deleteMaterial();
+	GLuint loadTexture(std::string & fileName);
+	void loadMaterialMap(std::unordered_map<std::string, Resources::Material*>& matMap, const char* fPath);
+	Object* loadObject(const char* fName);
+	std::string getFileNameFromPath(std::string& fPath);
+	std::string getFolderPath(std::string& fPath);
 };
 
 #endif

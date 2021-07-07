@@ -6,7 +6,8 @@ int Window::height;
 const char* Window::windowTitle = "GLFW Starter Project";
 
 //projection matrix
-glm::mat4 Window::projection;
+glm::mat4 Window::projection = glm::perspective(glm::radians(80.0),
+	double(width) / (double)height, 1.0, 1000.0);;
 
 // View Matrix:
 glm::vec3 Window::eyePos(0, 0, 20);			// Camera position.
@@ -19,7 +20,7 @@ Shader* Window::shader;
 
 bool Window::initializeProgram() {
 	// Create a shader program with a vertex shader and a fragment shader.
-	shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
+	//shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
 
 	// Check the shader program.
 	if (!shader->getId())
@@ -85,7 +86,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 	glcheck(glViewport(0, 0, width, height));
 
 	// Set the projection matrix.
-	Window::projection = glm::perspective(glm::radians(60.0),
+	Window::projection = glm::perspective(glm::radians(80.0),
 		double(width) / (double)height, 1.0, 1000.0);
 }
 

@@ -1,20 +1,24 @@
 #include "Mesh.h"
 
-Mesh::~Mesh()
-{
+Mesh::Mesh(std::string& name,Resources::Material* mtl, int vertOff, int meshSize) {
+    meshName = name;
+    material = mtl;
+    vertexOffset = vertOff;
+    size = meshSize;
 }
 
-GLuint Mesh::getVao() const
-{
-    return vao;
+Mesh::~Mesh() {
+    delete material;
 }
 
-void Mesh::bind() const
-{
-    glcheck(glBindVertexArray(vao));
+std::string& Mesh::getMeshName() {
+    return meshName;
 }
 
-void Mesh::unbind() const
-{
-    glcheck(glBindVertexArray(0));
+bool Mesh::setMaterial(Resources::Material*) {
+    return false;
+}
+
+Resources::Material* Mesh::getMaterial() {
+    return nullptr;
 }

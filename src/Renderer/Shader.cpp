@@ -1,7 +1,9 @@
+
 #include "shader.h"
 
-Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath)
-{
+Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath, glm::mat4* projmat, glm::mat4* viewMat) {
+	proj = projmat;
+	view = viewMat;
 	//pre assign the shader program id to be 0 for later error checking
 	//it should not be zero if shader is compiled and attached correctly
 	programID = 0;
@@ -156,9 +158,12 @@ bool Shader::setUniorm1F(std::string& uName, GLfloat uValue)
 	return true;
 }
 
-void Shader::bind() const 
-{
+void Shader::bind() {
 	glcheck(glUseProgram(programID));
+	std::string v = "view";
+	glcheck(glUniformMatrix4fv(getUniformLocation(v), 1, false, glm::value_ptr(*view)));
+	std::string p = "projection";
+	glcheck(glUniformMatrix4fv(getUniformLocation(p), 1, false, glm::value_ptr(*proj)));
 }
 
 void Shader::unbind() const 
