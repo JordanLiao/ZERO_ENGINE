@@ -3,6 +3,9 @@
 
 #include "Renderer/Shader.h"
 #include "Core.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Object.h"
+#include "Renderer/ResourceManager.h"
 
 class Window
 {
@@ -18,8 +21,12 @@ public:
 	static glm::mat4 view;
 	static glm::vec3 eyePos, lookAtPoint, upVector;
 
-	// Shader
+	// Renderer tools
 	static Shader* shader;
+	static Renderer renderer;
+	static ResourceManager resourceManager;
+
+	static Object* obj;
 
 	// Constructors and Destructors
 	static bool initializeProgram();

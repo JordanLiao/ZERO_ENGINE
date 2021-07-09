@@ -28,17 +28,17 @@ private:
 
 	//methods
 	GLuint LoadSingleShader(const char* shaderFilePath, ShaderType type);
-	GLint getUniformLocation(std::string&);
+	GLint getUniformLocation(const std::string&);
 
 public :
 	Shader(const char* vertex_file_path, const char* fragment_file_path, glm::mat4* projMat,
 		glm::mat4* viewMat);
 	~Shader();
 	GLuint getId() const;
-	bool setUniformMat4(std::string&, glm::mat4);
-	bool setUniformVec3(std::string&, glm::vec3);
-	bool setUniform1I(std::string&, GLint);
-	bool setUniorm1F(std::string&, GLfloat);
+	bool setUniformMat4(const std::string&, glm::mat4);
+	bool setUniformVec3(const std::string&, glm::vec3);
+	bool setUniform1I(const std::string&, GLint);
+	bool setUniorm1F(const std::string&, GLfloat);
 	void bind();
 	void unbind() const;
 };

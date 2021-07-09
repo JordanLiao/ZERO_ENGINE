@@ -90,7 +90,7 @@ void ResourceManager::loadMaterialMap(std::unordered_map<std::string, Resources:
 				//std::cout << "putting " << curr->materialName << std::endl;
 				matMap[curr->materialName] = curr;
 			}
-			curr = new Resources::Material;
+			curr = new Resources::Material();
 			ss >> curr->materialName;
 			//std::cout << "loading " << curr->materialName << std::endl;
 		}
@@ -190,14 +190,18 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	glm::ivec3 triangle;
 
 	while (std::getline(objFile, line)) {
-		ss << line;
+		ss.clear(); //clear string stream first
+		ss.str(line);
+		//ss << line;
 		ss >> label;
-		if (label == "#") //obj file comments
+		if (label == "#") { //obj file comments
 			continue;
+		}
 
 		//obj mtl name
 		else if (label == "mtllib") {
 			ss >> mtlName;
+			std::cout << "loading " << mtlName << std::endl;
 			loadMaterialMap(matMap, (folderPath + mtlName).c_str());
 		}
 
@@ -274,8 +278,6 @@ Object* ResourceManager::loadObject(const char* fPath) {
 			currMeshTriangleCount = 0;
 			ss >> currMeshName;
 		}
-
-		ss.clear(); //clear string stream
 	}
 	objFile.close();
 	// load the last mesh
@@ -287,8 +289,8 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	GLuint vbo[3];
 	GLuint ebo;
 
-	glcheck(glGenBuffers(3, vbo));
 	glcheck(glBindVertexArray(vao));
+	glcheck(glGenBuffers(3, vbo));
 
 	glcheck(glBindBuffer(GL_ARRAY_BUFFER, vbo[0]));
 	glcheck(glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * points.size(), points.data(), GL_STATIC_DRAW));
@@ -310,9 +312,9 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	glcheck(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(glm::ivec3) * triangles.size(), triangles.data(), GL_STATIC_DRAW));
 
 	// Unbind the VBO/VAO
-	glcheck(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-	glcheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	glcheck(glBindVertexArray(0));
+	glcheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	glcheck(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
 	return new Object(objName, mtlName, meshes, matMap, vao);
 }

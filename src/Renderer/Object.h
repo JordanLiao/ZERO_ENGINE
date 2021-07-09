@@ -7,12 +7,15 @@
 
 #include "../Core.h"
 #include "Mesh.h"
+#include "Renderer.h"
 
 class Object {
 private:
 	GLuint vao;
 	std::vector<GLuint> vbo;
 	GLuint ebo;
+	glm::mat4 model;
+	Renderer* renderer;
 
 public:
 	std::vector<Mesh*> meshList; //might want to use a different data structure for efficiencys
@@ -34,6 +37,9 @@ public:
 	void setEbo(GLuint);
 	void setVbo(GLuint* vbo, int size);
 	//
+
+	//most likely not going to have this kind of design pattern
+	void setRenderer(Renderer * r);
 
 };
 

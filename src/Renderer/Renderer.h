@@ -11,7 +11,7 @@ private:
 public:
 	Renderer();
 	~Renderer();
-	void draw(Resources::Material* mat, GLuint vao, int offset, int count);
+	void draw(glm::mat4 model, Resources::Material* mat, GLuint vao, int offset, int count, glm::vec3 eye);
 	void setShader(Shader * s);
 };
 

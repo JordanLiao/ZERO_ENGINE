@@ -119,7 +119,7 @@ GLuint Shader::LoadSingleShader(const char* shaderFilePath, ShaderType type)
 	or find the location and cache it in uniformMap.
 */
 
-GLint Shader::getUniformLocation(std::string& uName)
+GLint Shader::getUniformLocation(const std::string& uName)
 {
 	if (uniformMap.find(uName) != uniformMap.end()) {
 		return uniformMap[uName];
@@ -134,25 +134,25 @@ GLuint Shader::getId() const
 	return programID;
 }
 
-bool Shader::setUniformMat4(std::string& uName, glm::mat4 uValue)
+bool Shader::setUniformMat4(const std::string& uName, glm::mat4 uValue)
 {
 	glcheck(glUniformMatrix4fv(getUniformLocation(uName), 1, false, glm::value_ptr(uValue)));
 	return true;
 }
 
-bool Shader::setUniformVec3(std::string& uName, glm::vec3 uValue)
+bool Shader::setUniformVec3(const std::string& uName, glm::vec3 uValue)
 {
 	glcheck(glUniform3fv(getUniformLocation(uName), 1, glm::value_ptr(uValue)));
 	return true;
 }
 
-bool Shader::setUniform1I(std::string& uName, GLint uValue)
+bool Shader::setUniform1I(const std::string& uName, GLint uValue)
 {
 	glcheck(glUniform1i(getUniformLocation(uName), uValue));
 	return true;
 }
 
-bool Shader::setUniorm1F(std::string& uName, GLfloat uValue)
+bool Shader::setUniorm1F(const std::string& uName, GLfloat uValue)
 {
 	glcheck(glUniform1f(getUniformLocation(uName), uValue));
 	return true;
@@ -160,10 +160,8 @@ bool Shader::setUniorm1F(std::string& uName, GLfloat uValue)
 
 void Shader::bind() {
 	glcheck(glUseProgram(programID));
-	std::string v = "view";
-	glcheck(glUniformMatrix4fv(getUniformLocation(v), 1, false, glm::value_ptr(*view)));
-	std::string p = "projection";
-	glcheck(glUniformMatrix4fv(getUniformLocation(p), 1, false, glm::value_ptr(*proj)));
+	glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(*view)));
+	glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(*proj)));
 }
 
 void Shader::unbind() const 

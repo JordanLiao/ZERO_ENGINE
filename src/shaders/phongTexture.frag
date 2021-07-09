@@ -21,22 +21,22 @@ out vec4 fragColor;
 
 void main()
 {
-	vec4 texColor = texture(tex, texCoord);  //get the base object color from texture
-	vec3 lightPos = vec3(250.0, 0.0, 3000.0);	
-	vec3 lightDir = normalize(posOutput - lightPos);
+	vec3 lightPos = vec3(0.0, 10.0, 10.0);	
+	vec3 lightDir = normalize(lightPos - posOutput);
 	vec3 norm = normalize(normalOutput);
 	
 	//diffuse lighting
-	float diff = max(dot(norm, lightDir), 0.0); // this calculates diffuse intensity based on angle
-	vec3 diffuseColor = vec3(diffuseFactor[0],  diffuseFactor[1], diffuseFactor[2]); //this calculates diffuse
-	vec3 diffuse = diff * diffuseColor;   //color based on texture color value and input diffuse factor kd
+	float diffStrenth = max(dot(norm, lightDir), 0.0); // this calculates diffuse intensity based on angle
+	vec3 diffuse = diffStrenth * diffuseFactor * 2;   //color based on texture color value and input diffuse factor kd
 
-	float specularStrength = .3;           //4 might be too high
 	vec3 viewDir = normalize(viewPos - posOutput);	
 	vec3 reflectDir = reflect(-lightDir, normalOutput);  
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), specHighlight);
-	vec3 specular = specularStrength * spec * specColor; 
+	float spec = 0.0;
+	if(specHighlight > 0.0) { // if specHighlight is < 0, pow might produce undefined result if base is also 0
+		spec = pow(max(dot(viewDir, reflectDir), 0.0), specHighlight);
+	}
+	vec3 specular = spec * specColor;  
 	
-	vec3 result = ambientColor + diffuse + specular;
-	fragColor = vec4(result, dissolve);
+	vec3 result = ambientColor * 0.13 + diffuse * 0.65 + specular * 0.22;
+	fragColor = vec4(result, 1);
 }
