@@ -1,2 +1,4 @@
-﻿  Window.cpp
+﻿  UIManager.cpp
+D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(57,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(60,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   GAME_0.vcxproj -> D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.exe

@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\EngineApp.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Object.cpp" />
@@ -163,6 +164,14 @@
     <ClCompile Include="src\Renderer\ResourceManager.cpp" />
     <ClCompile Include="src\Renderer\Resources.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\tools\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\UIManager.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +183,16 @@
     <ClInclude Include="src\Renderer\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\Resources.h" />
+    <ClInclude Include="src\tools\Imgui\imconfig.h" />
+    <ClInclude Include="src\tools\Imgui\imgui.h" />
+    <ClInclude Include="src\tools\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\tools\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\tools\Imgui\imgui_internal.h" />
+    <ClInclude Include="src\tools\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\tools\Imgui\imstb_textedit.h" />
+    <ClInclude Include="src\tools\Imgui\imstb_truetype.h" />
     <ClInclude Include="src\tools\stb_image.h" />
+    <ClInclude Include="src\UIManager.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

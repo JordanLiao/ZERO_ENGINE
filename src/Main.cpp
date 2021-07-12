@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Window.h"
+#include "EngineApp.h"
 #include "Core.h"
 
 #include <unordered_map>
@@ -22,11 +23,11 @@ void setup_callbacks(GLFWwindow* window)
 	glfwSetWindowSizeCallback(window, Window::resizeCallback);
 
 	// Set the key callback.
-	glfwSetKeyCallback(window, Window::keyCallback);
+	glfwSetKeyCallback(window, EngineApp::keyCallback);
 
 	// Set the mouse and cursor callbacks
-	glfwSetMouseButtonCallback(window, Window::mouse_callback);
-	glfwSetCursorPosCallback(window, Window::cursor_callback);
+	glfwSetMouseButtonCallback(window, EngineApp::mouse_callback);
+	glfwSetCursorPosCallback(window, EngineApp::cursor_callback);
 }
 
 void setup_opengl_settings()
@@ -63,18 +64,24 @@ int main(int argc, char* argv[])
 	setup_opengl_settings();
 
 	// Initialize the shader program; exit if initialization fails.
-	if (!Window::initializeProgram()) exit(EXIT_FAILURE);
+	if (!EngineApp::initializeProgram(window)) exit(EXIT_FAILURE);
 	// Initialize objects/pointers for rendering; exit if initialization fails.
-	if (!Window::initializeObjects()) exit(EXIT_FAILURE);
+	if (!EngineApp::initializeObjects()) exit(EXIT_FAILURE);
 
 	while (!glfwWindowShouldClose(window))
 	{
-		//updating game state here
-		Window::idleCallback();	
-		Window::displayCallback(window);
+		// Clear the color and depth buffers
+		glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+
+		//updating app state
+		EngineApp::idleCallback();	
+		EngineApp::displayCallback();
+
+		glfwPollEvents();
+		glfwSwapBuffers(window);
 	}
 
-	Window::cleanUp();
+	EngineApp::cleanUp();
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	exit(EXIT_SUCCESS);

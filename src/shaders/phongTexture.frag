@@ -21,7 +21,7 @@ out vec4 fragColor;
 
 void main()
 {
-	vec3 lightPos = vec3(0.0, 10.0, 10.0);	
+	vec3 lightPos = vec3(10.0, 5.0, 0.0);	
 	vec3 lightDir = normalize(lightPos - posOutput);
 	vec3 norm = normalize(normalOutput);
 	
@@ -37,6 +37,6 @@ void main()
 	}
 	vec3 specular = spec * specColor;  
 	
-	vec3 result = ambientColor * 0.13 + diffuse * 0.65 + specular * 0.22;
+	vec3 result = ambientColor * 0.04 + diffuse * 0.74 + specular * 0.22;
 	fragColor = vec4(result, 1);
 }
