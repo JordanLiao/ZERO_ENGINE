@@ -16,6 +16,7 @@ out vec3 posOutput;
 void main()
 {
     	gl_Position = projection * view * model * vec4(position, 1.0);
+        //should i use a model matrix without tranlation for transforming normals?
     	normalOutput = mat3(transpose(inverse(model))) * normal; 
     	posOutput = vec3(model * vec4(position, 1.0));
 	texCoord = aTex;

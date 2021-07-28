@@ -14,25 +14,23 @@
 
 class ResourceManager {
 private:
-	std::unordered_map<std::string, GLuint> textureMap; //map of texture name to texture id
+	static std::unordered_map<std::string, GLuint> textureMap; //map of texture name to texture id
 	//mapping mtl file names to maps of mtl values. Design decision due to the fact that mtl file
 	//names are unique, whereas single mtl value may not be.
-	std::unordered_map<std::string, std::unordered_map<std::string, Resources::Material*>*> mtlMapMap;
+	static std::unordered_map<std::string, std::unordered_map<std::string, Resources::Material*>*> mtlMapMap;
 
 public:
-	ResourceManager();
-	~ResourceManager();
-	GLuint getTextureId(std::string& textureName);
-	std::unordered_map<std::string, Resources::Material*> getMaterialMap(std::string& materialMapName);
-	bool loadTextures();
-	bool loadMaterials();
-	void deleteTexture();
-	void deleteMaterial();
-	GLuint loadTexture(std::string & fileName);
-	void loadMaterialMap(std::unordered_map<std::string, Resources::Material*>& matMap, const char* fPath);
-	Object* loadObject(const char* fName);
-	std::string getFileNameFromPath(std::string& fPath);
-	std::string getFolderPath(std::string& fPath);
+	static GLuint getTextureId(std::string& textureName);
+	static std::unordered_map<std::string, Resources::Material*> getMaterialMap(std::string& materialMapName);
+	static bool loadTextures();
+	static bool loadMaterials();
+	static void deleteTexture();
+	static void deleteMaterial();
+	static GLuint loadTexture(std::string & fileName);
+	static void loadMaterialMap(std::unordered_map<std::string, Resources::Material*>& matMap, const char* fPath);
+	static Object* loadObject(const char* fName);
+	static std::string getFileNameFromPath(std::string& fPath);
+	static std::string getFolderPath(std::string& fPath);
 };
 
 #endif

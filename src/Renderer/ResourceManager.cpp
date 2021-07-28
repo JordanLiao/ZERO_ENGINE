@@ -2,13 +2,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../tools/stb_image.h"
 
-ResourceManager::ResourceManager()
-{
-}
-
-ResourceManager::~ResourceManager()
-{
-}
+std::unordered_map<std::string, GLuint> ResourceManager::textureMap; //map of texture name to texture id
+	//mapping mtl file names to maps of mtl values. Design decision due to the fact that mtl file
+	//names are unique, whereas single mtl value may not be.
+std::unordered_map<std::string, std::unordered_map<std::string, Resources::Material*>*> ResourceManager::mtlMapMap;
 
 GLuint ResourceManager::getTextureId(std::string& textureName)
 {

@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\EngineApp.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="src\Renderer\ResourceManager.cpp" />
     <ClCompile Include="src\Renderer\Resources.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\tools\ColorID.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui_demo.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui_draw.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\EngineApp.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="src\Renderer\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\Resources.h" />
+    <ClInclude Include="src\tools\ColorID.h" />
     <ClInclude Include="src\tools\Imgui\imconfig.h" />
     <ClInclude Include="src\tools\Imgui\imgui.h" />
     <ClInclude Include="src\tools\Imgui\imgui_impl_glfw.h" />
@@ -194,6 +198,14 @@
     <ClInclude Include="src\tools\stb_image.h" />
     <ClInclude Include="src\UIManager.h" />
     <ClInclude Include="src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\colorPicking.frag" />
+    <None Include="src\shaders\colorPicking.vert" />
+    <None Include="src\shaders\phongTexture.frag" />
+    <None Include="src\shaders\phongTexture.vert" />
+    <None Include="src\shaders\shader.frag" />
+    <None Include="src\shaders\shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

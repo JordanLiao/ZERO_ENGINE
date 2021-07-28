@@ -27,6 +27,7 @@ void setup_callbacks(GLFWwindow* window)
 
 	// Set the mouse and cursor callbacks
 	glfwSetMouseButtonCallback(window, EngineApp::mouse_callback);
+	glfwSetScrollCallback(window, EngineApp::scroll_callback);
 	glfwSetCursorPosCallback(window, EngineApp::cursor_callback);
 }
 
@@ -56,13 +57,15 @@ void beginTests() {
 
 int main(int argc, char* argv[])
 {
-	GLFWwindow* window = Window::createWindow(800, 600);	
+	GLFWwindow* window = Window::createWindow(1920, 1001);	
 	if (!window) exit(EXIT_FAILURE);
 
 	print_versions();
 	setup_callbacks(window);
 	setup_opengl_settings();
 
+	//initialize the renderer
+	Renderer::initRenderer(NULL); // use default camera
 	// Initialize the shader program; exit if initialization fails.
 	if (!EngineApp::initializeProgram(window)) exit(EXIT_FAILURE);
 	// Initialize objects/pointers for rendering; exit if initialization fails.

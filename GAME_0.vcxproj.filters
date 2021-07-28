@@ -69,6 +69,12 @@
     <ClCompile Include="src\tools\Imgui\imgui_impl_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools\ColorID.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tools\stb_image.h">
@@ -128,5 +134,19 @@
     <ClInclude Include="src\tools\Imgui\imgui_impl_glfw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\tools\ColorID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\phongTexture.vert" />
+    <None Include="src\shaders\shader.frag" />
+    <None Include="src\shaders\shader.vert" />
+    <None Include="src\shaders\phongTexture.frag" />
+    <None Include="src\shaders\colorPicking.vert" />
+    <None Include="src\shaders\colorPicking.frag" />
   </ItemGroup>
 </Project>

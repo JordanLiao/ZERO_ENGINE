@@ -19,6 +19,9 @@ public:
 	UIManager(GLFWwindow* window);
 	~UIManager();
 	void render();
+
+	//all the ui components
+	void showTopManu();
 };
 
 #endif // _UIMANAGER_H_

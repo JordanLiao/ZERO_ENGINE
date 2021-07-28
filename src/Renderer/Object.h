@@ -8,6 +8,7 @@
 #include "../Core.h"
 #include "Mesh.h"
 #include "Renderer.h"
+#include "../tools/ColorID.h"
 
 class Object {
 private:
@@ -15,32 +16,34 @@ private:
 	std::vector<GLuint> vbo;
 	GLuint ebo;
 	glm::mat4 model;
-	Renderer* renderer;
+	void setColorId();
 
 public:
 	std::vector<Mesh*> meshList; //might want to use a different data structure for efficiencys
 	std::string mtlFileName; //store the mtl file name in case the file is not yet loaded.
 	std::string objFileName;
 	std::unordered_map<std::string, Resources::Material*> matMap; //map of all the materials this Object uses
+	int colorId;
+	glm::vec3 pos;
 
 	Object(std::string& objName, GLuint vertArrObj = 0);
 	Object(std::string& objName, std::string& mtlName, std::vector<Mesh*>& meshes, 
 	std::unordered_map<std::string, Resources::Material*>& materials, GLuint vertArrObj = 0);
 	~Object();
-	void render();
 	
-	// these two functions are used when meshlist and matmap are not provided during construction
+	void render();
+	void renderColorCode();
+	
+	// setter functions
 	void setMeshList(std::vector<Mesh*>&);
 	void setMatMap(std::unordered_map<std::string, Resources::Material*>&);
 	void setMtlName(std::string& mtlName);
 	void setVao(GLuint);
 	void setEbo(GLuint);
 	void setVbo(GLuint* vbo, int size);
-	//
 
-	//most likely not going to have this kind of design pattern
-	void setRenderer(Renderer * r);
-
+	//transformation functions
+	void translate(glm::vec3 trans);
 };
 
 #endif

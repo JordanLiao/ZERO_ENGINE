@@ -14,8 +14,8 @@ out vec3 posOutput;
 
 void main()
 {
-    	gl_Position = projection * view * model * vec4(position, 1.0);
+    gl_Position = projection * view * model * vec4(position, 1.0);
 	normalOutput = mat3(transpose(inverse(model))) * normal; 
-    	posOutput = vec3(model * vec4(position, 1.0));
+    posOutput = vec3(model * vec4(position, 1.0));
 	texCoord = aTex;
 }

@@ -12,35 +12,39 @@
 
 #include "../Core.h"
 
-enum ShaderType { vertex, fragment };
+enum class shaderType { 
+	vertex, 
+	fragment 
+};
+
+enum shaderRole {
+	simpleModelShader,
+	phongShader,
+	colorPickingShader,
+	shaderSize
+};
 
 class Shader {
-	enum shader {
-		simpleModelShader,
-		phongShader
-	};
-
 private: 
 	GLuint programID;
 	std::unordered_map<std::string, GLint> uniformMap;
-	glm::mat4 *proj;
-	glm::mat4  *view;
+	bool bound; //whether this shader object is already bound
 
 	//methods
-	GLuint LoadSingleShader(const char* shaderFilePath, ShaderType type);
+	GLuint LoadSingleShader(const char* shaderFilePath, shaderType type);
 	GLint getUniformLocation(const std::string&);
 
 public :
-	Shader(const char* vertex_file_path, const char* fragment_file_path, glm::mat4* projMat,
-		glm::mat4* viewMat);
+	Shader(const char* vertex_file_path, const char* fragment_file_path);
 	~Shader();
 	GLuint getId() const;
 	bool setUniformMat4(const std::string&, glm::mat4);
 	bool setUniformVec3(const std::string&, glm::vec3);
 	bool setUniform1I(const std::string&, GLint);
 	bool setUniorm1F(const std::string&, GLfloat);
-	void bind();
-	void unbind() const;
+	bool setUniorm4F(const std::string&, GLfloat, GLfloat, GLfloat, GLfloat);
+	void bind(glm::mat4 view, glm::mat4 proj);
+	void unbind();
 };
 
 

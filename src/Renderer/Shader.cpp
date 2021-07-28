@@ -1,16 +1,15 @@
 
 #include "shader.h"
 
-Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath, glm::mat4* projmat, glm::mat4* viewMat) {
-	proj = projmat;
-	view = viewMat;
+Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath) {
+	bound = false;
 	//pre assign the shader program id to be 0 for later error checking
 	//it should not be zero if shader is compiled and attached correctly
 	programID = 0;
 
 	// Create the vertex shader and fragment shader.
-	GLuint vertexShaderID = LoadSingleShader(vertexFilePath, vertex);
-	GLuint fragmentShaderID = LoadSingleShader(fragmentFilePath, fragment);
+	GLuint vertexShaderID = LoadSingleShader(vertexFilePath, shaderType::vertex);
+	GLuint fragmentShaderID = LoadSingleShader(fragmentFilePath, shaderType::fragment);
 
 	// Check both shaders.
 	if (vertexShaderID == 0 || fragmentShaderID == 0) return;
@@ -55,13 +54,13 @@ Shader::~Shader()
 		glDeleteProgram(programID);
 }
 
-GLuint Shader::LoadSingleShader(const char* shaderFilePath, ShaderType type)
+GLuint Shader::LoadSingleShader(const char* shaderFilePath, shaderType type)
 {
 	// Create a shader id.
 	GLuint shaderID = 0;
-	if (type == vertex)
+	if (type == shaderType::vertex)
 		shaderID = glCreateShader(GL_VERTEX_SHADER);
-	else if (type == fragment)
+	else if (type == shaderType::fragment)
 		shaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Try to read shader codes from the shader file.
@@ -105,9 +104,9 @@ GLuint Shader::LoadSingleShader(const char* shaderFilePath, ShaderType type)
 	}
 	else
 	{
-		if (type == vertex)
+		if (type == shaderType::vertex)
 			std::cout << "Successfully compiled vertex shader!" << std::endl;
-		else if (type == fragment)
+		else if (type == shaderType::fragment)
 			std::cout << "Successfully compiled fragment shader!" << std::endl;
 	}
 
@@ -125,6 +124,8 @@ GLint Shader::getUniformLocation(const std::string& uName)
 		return uniformMap[uName];
 	}
 	GLint location = glGetUniformLocation(programID, uName.c_str());
+	if (location == -1) // if location cannot be found within the shader program, return -1
+		return location;
 	uniformMap[uName] = location;
 	return location;
 }
@@ -158,13 +159,22 @@ bool Shader::setUniorm1F(const std::string& uName, GLfloat uValue)
 	return true;
 }
 
-void Shader::bind() {
-	glcheck(glUseProgram(programID));
-	glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(*view)));
-	glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(*proj)));
+bool Shader::setUniorm4F(const std::string& uName, GLfloat uValue0, GLfloat uValue1, GLfloat uValue2, GLfloat uValue3){
+	glcheck(glUniform4f(getUniformLocation(uName), uValue0, uValue1, uValue2, uValue3));
+	return true;
 }
 
-void Shader::unbind() const 
+void Shader::bind(glm::mat4 view, glm::mat4 proj) {
+	if (bound) // if already bound, do not bound again.
+		return;
+	glcheck(glUseProgram(programID));
+	glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(view)));
+	glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(proj)));
+	bound = true;
+}
+
+void Shader::unbind() 
 {
 	glcheck(glUseProgram(0));
+	bound = false;
 }
