@@ -5,8 +5,8 @@
 
 #include "Renderer/Renderer.h"
 #include "UIManager.h"
-#include "Renderer/Object.h"
-#include "Renderer/ResourceManager.h"
+#include "GameItems/Object.h"
+#include "ResourceTools/ResourceManager.h"
 
 //pre-determined constants for dragging to ensure that when camera zooms out, 
 //dragging speed is increased proportionally.
@@ -15,7 +15,9 @@ const float REF_DISTANCE = 9.8387f;
 
 enum class cursorState {
 	idle,
-	picking // when G is pressed
+	picking, // when G is pressed
+	panning,  // when scroll wheel is hold down
+	freeCam
 };
 
 class EngineApp {
@@ -27,8 +29,7 @@ private:
 	static std::unordered_map<int, Object*> colorCodeMap;
 
 	//mouse/keyboard states
-	static bool leftMousePressed;
-	static bool rightMousePressed;
+	static bool mousePressed[3];
 	static cursorState currentCursorState;
 	static double cursorPosition[2];
 	static double prevCursorPosition[2];

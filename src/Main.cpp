@@ -57,7 +57,7 @@ void beginTests() {
 
 int main(int argc, char* argv[])
 {
-	GLFWwindow* window = Window::createWindow(1920, 1001);	
+	GLFWwindow* window = Window::createWindow();	
 	if (!window) exit(EXIT_FAILURE);
 
 	print_versions();

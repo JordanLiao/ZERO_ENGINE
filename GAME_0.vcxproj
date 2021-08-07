@@ -155,15 +155,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderer\Camera.cpp" />
+    <ClCompile Include="src\GameItems\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\EngineApp.cpp" />
+    <ClCompile Include="src\GameItems\Scene.cpp" />
+    <ClCompile Include="src\GameItems\Transform.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Renderer\Mesh.cpp" />
-    <ClCompile Include="src\Renderer\Object.cpp" />
+    <ClCompile Include="src\GameItems\Mesh.cpp" />
+    <ClCompile Include="src\GameItems\Object.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Renderer\ResourceManager.cpp" />
-    <ClCompile Include="src\Renderer\Resources.cpp" />
+    <ClCompile Include="src\ResourceTools\ResourceManager.cpp" />
+    <ClCompile Include="src\ResourceTools\Resources.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\tools\ColorID.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui.cpp" />
@@ -177,15 +179,18 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\GameItems\Camera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\EngineApp.h" />
-    <ClInclude Include="src\Renderer\Mesh.h" />
-    <ClInclude Include="src\Renderer\Object.h" />
+    <ClInclude Include="src\GameItems\Mesh.h" />
+    <ClInclude Include="src\GameItems\Object.h" />
+    <ClInclude Include="src\GameItems\Scene.h" />
+    <ClInclude Include="src\GameItems\SceneNode.h" />
+    <ClInclude Include="src\GameItems\Transform.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
-    <ClInclude Include="src\Renderer\ResourceManager.h" />
+    <ClInclude Include="src\ResourceTools\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
-    <ClInclude Include="src\Renderer\Resources.h" />
+    <ClInclude Include="src\ResourceTools\Resources.h" />
     <ClInclude Include="src\tools\ColorID.h" />
     <ClInclude Include="src\tools\Imgui\imconfig.h" />
     <ClInclude Include="src\tools\Imgui\imgui.h" />

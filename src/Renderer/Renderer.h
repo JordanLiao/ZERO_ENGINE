@@ -3,16 +3,16 @@
 
 #include "../Core.h"
 #include "Shader.h"
-#include "Resources.h"
-#include "Camera.h"
+#include "../ResourceTools/Resources.h"
+#include "../GameItems/Camera.h"
 #include "../Window.h"
 
 class Renderer {
 private:
 	static Shader* shaders[];
 	static Shader* currShader;
-	static Camera* cameras[];
-	static Camera* currCamera;
+	static Camera* cameras[]; // TODO NOTE, possibily not a good choice to keep cameras list in the renderer class becausae
+	static Camera* currCamera; // cameras are often associated with scenes and light sources.
 public:
 	static void initRenderer(Camera * engineDisplayCameraq);
 

@@ -21,7 +21,7 @@ public:
 	static glm::mat4 projection;
 
 	// Window functions
-	static GLFWwindow* createWindow(int width, int height);
+	static GLFWwindow* createWindow();
 	static void resizeCallback(GLFWwindow* window, int width, int height);
 	static void bindFramebuffer(framebuffer id);
 

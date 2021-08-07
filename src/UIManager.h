@@ -1,6 +1,7 @@
 #ifndef _UIMANAGER_H_
 #define _UIMANAGER_H_
 
+#include <iostream>
 #include <stdio.h>
 #include "tools/Imgui/imgui.h"
 #include "tools/Imgui/imgui_impl_opengl3.h"
@@ -21,7 +22,8 @@ public:
 	void render();
 
 	//all the ui components
-	void showTopManu();
+	void showTopMenu();
+	void showResourceDock();
 };
 
 #endif // _UIMANAGER_H_

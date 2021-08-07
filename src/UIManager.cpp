@@ -32,20 +32,41 @@ void UIManager::render() {
     ImGui::NewFrame();
 
     //select and show the ui components
-    showTopManu();
+    showTopMenu();
+    ImGui::Begin("Resources");
+    ImVec2 windowSize(300, 500);
+    ImGui::SetWindowSize(windowSize);
+    showResourceDock();
+    ImGui::End();
 
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void UIManager::showTopManu() {
+void UIManager::showTopMenu() {
     ImGui::BeginMainMenuBar();
+    //
     ImGui::SetWindowFontScale(1.4);
     ImGui::MenuItem("File", NULL);
     ImGui::Spacing();
     ImGui::MenuItem("Edit", NULL);
     ImGui::Spacing();
     ImGui::MenuItem("Project", NULL);
+    ImVec2 menuSize = ImGui::GetWindowSize();
+    //
     ImGui::EndMainMenuBar();
+    ImGui::SetNextWindowPos(ImVec2(0, menuSize.y));
 }
+
+void UIManager::showResourceDock() {
+    ImGui::BeginChild("New Resource");
+    ImGui::PushItemWidth(180.f);
+    ImVec2 windowSize(300, 100);
+    ImGui::SetWindowSize(windowSize);
+    char buf[100] = "";
+    ImGui::InputText("new resource", buf, sizeof(buf));
+    ImGui::EndChild();
+}
+
+

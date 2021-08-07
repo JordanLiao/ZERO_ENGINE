@@ -1,2 +1,4 @@
 ﻿  EngineApp.cpp
+D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(124,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(125,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   GAME_0.vcxproj -> D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.exe

@@ -8,8 +8,7 @@ Object* EngineApp::focusedObject = NULL;
 std::unordered_map<int, Object*> EngineApp::colorCodeMap;
 
 //mouse/keyboard states
-bool EngineApp::leftMousePressed = false;
-bool EngineApp::rightMousePressed = false;
+bool EngineApp::mousePressed[3];
 cursorState EngineApp::currentCursorState = cursorState::idle;
 double EngineApp::cursorPosition[2] = {0.0, 0.0};
 double EngineApp::prevCursorPosition[2] = {0.0, 0.0};
@@ -46,12 +45,7 @@ bool EngineApp::initializeProgram(GLFWwindow * w) {
 	ui = UIManager(w);
 	Shader* shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
 	Shader* colorCodeshader = new Shader("src/shaders/colorPicking.vert", "src/shaders/colorPicking.frag");
-	// Check the shader program.
-	if (shader->getId() == 0)
-	{
-		std::cerr << "Failed to initialize shader program" << std::endl;
-		return false;
-	}
+
 	Renderer::addShader(shaderRole::phongShader, shader);
 	Renderer::addShader(shaderRole::colorPickingShader, colorCodeshader);
 	Renderer::setShader(shaderRole::phongShader); // set phong shading as default
@@ -77,6 +71,7 @@ void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int actio
 			//glfwSetWindowShouldClose(window, GL_TRUE);
 			break;
 		case GLFW_KEY_G:
+			keyPressed[GLFW_KEY_G] = true;
 			if (focusedObject != NULL) {
 				if (currentCursorState == cursorState::idle) {
 					currentCursorState = cursorState::picking; //go into mouse/cursor picking mode
@@ -88,6 +83,15 @@ void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int actio
 				}
 			}
 			break;
+		case GLFW_KEY_F:
+			keyPressed[GLFW_KEY_F] = true;
+			if (currentCursorState == cursorState::idle) {
+				currentCursorState = cursorState::freeCam;
+				std::cout << "free camera state" << std::endl;
+			}
+			else if (currentCursorState == cursorState::freeCam) { //revert free cam to idle fix cam
+				currentCursorState = cursorState::idle;
+			}
 		default:
 			break;
 		}
@@ -97,13 +101,31 @@ void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int actio
 void EngineApp::cursor_callback(GLFWwindow* window, double currX, double currY) {
 	double dx = currX - cursorPosition[0];
 	double dy = currY - cursorPosition[1];
+	
+	Camera* cam = Renderer::getCurrCamera();
+	glm::vec3 relativePoint(0.0f); //camera is relative to the origin if no object is focused on
+	if (focusedObject != NULL)
+		relativePoint = focusedObject->pos;
+	float dis = glm::length(glm::dot((relativePoint - cam->eyePos), cam->lookDirection));
 
-	if (currentCursorState == cursorState::picking) {
-		Camera* cam = Renderer::getCurrCamera();
-		float dis = glm::length(glm::dot((focusedObject->pos - cam->eyePos), cam->lookDirection));
-		//std::cout << "dis " << dis << std::endl;
-		focusedObject->translate((cam->camRight * float(dx) - cam->camUp * float(dy)) / 
-		SLOW_DOWN_FACTOR * dis / REF_DISTANCE);
+	switch (currentCursorState) {
+	case cursorState::picking: {
+		focusedObject->translate((cam->camRight * float(dx) - cam->camUp * float(dy)) /
+			SLOW_DOWN_FACTOR * dis / REF_DISTANCE);
+		}
+		break;
+	case cursorState::panning: {
+		glm::vec3 offset = (cam->camRight * float(dx) - cam->camUp * float(dy)) /
+			SLOW_DOWN_FACTOR * dis / REF_DISTANCE;
+		cam->translate(offset);
+		}
+		break;
+	case cursorState::freeCam : {
+		cam->rotate(cam->camUp, dx * 0.003);
+		cam->rotate(cam->camLeft, dy * -0.003);
+	}
+	default:
+		break;
 	}
 
 	cursorPosition[0] = currX;
@@ -113,7 +135,7 @@ void EngineApp::cursor_callback(GLFWwindow* window, double currX, double currY) 
 void EngineApp::mouse_callback(GLFWwindow* window, int button, int action, int mods) {
 	if (action == GLFW_PRESS) { // if left mouse button pressed
 		if(button == GLFW_MOUSE_BUTTON_LEFT) { // if left mouse button pressed
-			leftMousePressed = true;
+			mousePressed[0] = true;
 			switch (currentCursorState) {
 			case cursorState::idle:
 				colorPick(cursorPosition[0], cursorPosition[1]);
@@ -127,17 +149,29 @@ void EngineApp::mouse_callback(GLFWwindow* window, int button, int action, int m
 			}
 		}
 		else if (button == GLFW_MOUSE_BUTTON_RIGHT) { // if right mouse button pressed
-			rightMousePressed = true;
+			mousePressed[1] = true;
+		}
+		else if (button == GLFW_MOUSE_BUTTON_MIDDLE) {  // scroll wheel pressed
+			mousePressed[2] = true;
+			if (currentCursorState == cursorState::idle) { // only go to panning from idle state
+				currentCursorState = cursorState::panning;
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			}
 		}
 	}
 
 	//release actions
 	if (action == GLFW_RELEASE) {
 		if (button == GLFW_MOUSE_BUTTON_LEFT) {
-			leftMousePressed = false;
+			mousePressed[0] = false;
 		}
 		else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
-			rightMousePressed = false;
+			mousePressed[1] = false;
+		}
+		else if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
+			mousePressed[2] = false;
+			currentCursorState = cursorState::idle;
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}
 }

@@ -22,7 +22,7 @@ glm::vec3 Window::camRight(1, 0, 0);        //direction to the right of the came
 //color picking offscreen framebuffer properties
 GLuint Window::pickingFramebuffer, Window::pickingRenderbuffer;
 
-GLFWwindow* Window::createWindow(int width, int height)
+GLFWwindow* Window::createWindow()
 {
 	// Initialize GLFW.
 	if (!glfwInit())
@@ -34,7 +34,11 @@ GLFWwindow* Window::createWindow(int width, int height)
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// Create the GLFW window.
-	GLFWwindow* window = glfwCreateWindow(width, height, windowTitle, NULL, NULL);
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	int xpos, ypos, workAreawidth, workAreaheight;
+	glfwGetMonitorWorkarea(monitor, &xpos, &ypos, &workAreawidth, &workAreaheight);
+	GLFWwindow* window = glfwCreateWindow(workAreawidth, workAreaheight, windowTitle, NULL, NULL);
+	glfwSetWindowPos(window, xpos, ypos + 30);
 	if (!window)
 	{
 		std::cerr << "Failed to open GLFW window." << std::endl;
@@ -57,7 +61,7 @@ GLFWwindow* Window::createWindow(int width, int height)
 	glcheck(glGenFramebuffers(1, &pickingFramebuffer));
 
 	// Call the resize callback to make sure things get drawn immediately.
-	Window::resizeCallback(window, width, height);
+	Window::resizeCallback(window, 1920, 1001);
 
 	//check if picking buffer is complete
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
