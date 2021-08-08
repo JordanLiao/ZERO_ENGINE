@@ -34,7 +34,9 @@ void Camera::translate(glm::vec3 trans) {
 }
 
 void Camera::rotate(glm::vec3 axis, float rad) {
-	lookDirection = glm::normalize(glm::vec4(lookDirection, 0.0f) * glm::rotate(rad, axis));
+	glm::vec3 temp = glm::normalize(glm::vec4(lookDirection, 0.0f) * glm::rotate(rad, axis));
+	if (glm::length(glm::dot(temp ,glm::vec3(0.f, 1.f, 0.f))) < 0.98f)
+		lookDirection = temp;
 	lookAtPoint = eyePos + lookDirection;
 	upVector = glm::vec3(0.f, 1.0f, 0.f);
 	camLeft = glm::normalize(glm::cross(upVector, lookAtPoint - eyePos));

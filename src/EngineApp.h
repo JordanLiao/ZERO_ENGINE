@@ -51,6 +51,7 @@ public:
 
 	//handler functions
 	static void colorPick(double x, double y);
+	static void moveCamera(int key);
 
 	//initialization and clean up functions
 	static bool initializeProgram(GLFWwindow * w);

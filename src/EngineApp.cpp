@@ -17,7 +17,21 @@ bool EngineApp::keyPressed[350];
 Object* EngineApp::obj;
 
 void EngineApp::idleCallback() {
-	// Perform any necessary updates here 
+	// Perform any necessary updates here
+	if (currentCursorState == cursorState::freeCam) { //move camera in free cam
+		if (keyPressed[GLFW_KEY_W])
+			moveCamera(GLFW_KEY_W);
+		if (keyPressed[GLFW_KEY_A])
+			moveCamera(GLFW_KEY_A);
+		if (keyPressed[GLFW_KEY_S])
+			moveCamera(GLFW_KEY_S);
+		if (keyPressed[GLFW_KEY_D])
+			moveCamera(GLFW_KEY_D);
+		if (keyPressed[GLFW_KEY_LEFT_SHIFT])
+			moveCamera(GLFW_KEY_LEFT_SHIFT);
+		if (keyPressed[GLFW_KEY_LEFT_CONTROL])
+			moveCamera(GLFW_KEY_LEFT_CONTROL);
+	}
 }
 
 void EngineApp::displayCallback()
@@ -39,6 +53,23 @@ void EngineApp::colorPick(double x, double y) {
 	if (colorCodeMap.find(code) != colorCodeMap.end())
 		focusedObject = colorCodeMap[code]; 
 }
+
+void EngineApp::moveCamera(int key) {
+	Camera* cam = Renderer::getCurrCamera();
+	if (key == GLFW_KEY_W)
+		cam->translate(cam->lookDirection * 0.07f);
+	else if (key == GLFW_KEY_A)
+		cam->translate(cam->camLeft * 0.05f);
+	else if (key == GLFW_KEY_S)
+		cam->translate(cam->lookDirection * -0.07f);
+	else if (key == GLFW_KEY_D)
+		cam->translate(cam->camRight * 0.05f);
+	else if (key == GLFW_KEY_LEFT_SHIFT)
+		cam->translate(glm::vec3(0.f, 0.05f, 0.0f));
+	else if (key == GLFW_KEY_LEFT_CONTROL)
+		cam->translate(glm::vec3(0.f, -0.05f, 0.0f));
+}
+
 
 bool EngineApp::initializeProgram(GLFWwindow * w) {
 	window = w;
@@ -66,12 +97,12 @@ void EngineApp::cleanUp() {
 void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (action == GLFW_PRESS)
 	{
+		keyPressed[key] = true;
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
 			//glfwSetWindowShouldClose(window, GL_TRUE);
 			break;
 		case GLFW_KEY_G:
-			keyPressed[GLFW_KEY_G] = true;
 			if (focusedObject != NULL) {
 				if (currentCursorState == cursorState::idle) {
 					currentCursorState = cursorState::picking; //go into mouse/cursor picking mode
@@ -84,17 +115,20 @@ void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int actio
 			}
 			break;
 		case GLFW_KEY_F:
-			keyPressed[GLFW_KEY_F] = true;
 			if (currentCursorState == cursorState::idle) {
 				currentCursorState = cursorState::freeCam;
-				std::cout << "free camera state" << std::endl;
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			}
 			else if (currentCursorState == cursorState::freeCam) { //revert free cam to idle fix cam
 				currentCursorState = cursorState::idle;
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			}
 		default:
 			break;
 		}
+	}
+	else if (action == GLFW_RELEASE) {
+		keyPressed[key] = false;
 	}
 }
 
