@@ -4,9 +4,9 @@
 #include <unordered_map>
 
 #include "Renderer/Renderer.h"
-#include "UIManager.h"
-#include "GameItems/Object.h"
+#include "GameItems/Scene.h"
 #include "ResourceTools/ResourceManager.h"
+//#include "UIManager.h"
 
 //pre-determined constants for dragging to ensure that when camera zooms out, 
 //dragging speed is increased proportionally.
@@ -23,10 +23,8 @@ enum class cursorState {
 class EngineApp {
 private:
 	static GLFWwindow* window;
-	static UIManager ui;
 
-	static Object* focusedObject;
-	static std::unordered_map<int, Object*> colorCodeMap;
+	static Instance* focusedInstance;
 
 	//mouse/keyboard states
 	static bool mousePressed[3];
@@ -35,8 +33,7 @@ private:
 	static double prevCursorPosition[2];
 	static bool keyPressed[350];
 
-	//test
-	static Object* obj;
+	static Scene* currScene;
 
 public:
 	//application callbacks
@@ -57,6 +54,9 @@ public:
 	static bool initializeProgram(GLFWwindow * w);
 	static bool initializeObjects();
 	static void cleanUp();
+
+	//getter/setters
+	static Scene* getCurrentScene();
 };
 
 #endif

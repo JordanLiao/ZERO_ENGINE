@@ -6,6 +6,14 @@ std::unordered_map<std::string, GLuint> ResourceManager::textureMap; //map of te
 	//mapping mtl file names to maps of mtl values. Design decision due to the fact that mtl file
 	//names are unique, whereas single mtl value may not be.
 std::unordered_map<std::string, std::unordered_map<std::string, Resources::Material*>*> ResourceManager::mtlMapMap;
+//mapping object names to objects
+std::unordered_map<std::string, Object*> ResourceManager::objMap;
+//list to keep track of all the loaded objects
+std::list<Object*> ResourceManager::objList;
+//Resources::Material ResourceManager::defaultMat;
+
+void ResourceManager::init() {
+}
 
 GLuint ResourceManager::getTextureId(std::string& textureName)
 {
@@ -65,14 +73,21 @@ GLuint ResourceManager::loadTexture(std::string & fPath) {
 	return textId;
 }
 
-void ResourceManager::loadMaterialMap(std::unordered_map<std::string, Resources::Material*>& matMap,
+/*
+	load a .mtl file as a material map, and store this map in a map of material maps for future reference
+*/
+bool ResourceManager::loadMaterialMap(std::unordered_map<std::string, Resources::Material*>& matMap,
 	const char* fPath) {
 
 	std::ifstream objFile(fPath);
-	if (!objFile.is_open())
+	if (!objFile.is_open()) {
 		std::cerr << "Can't open mtl file: " << fPath << std::endl;
+		return false;
+	}
 
+	//provide a default material
 	Resources::Material* curr = NULL;
+
 	std::string line;
 	while (std::getline(objFile, line)) {
 		std::stringstream ss;
@@ -141,9 +156,11 @@ void ResourceManager::loadMaterialMap(std::unordered_map<std::string, Resources:
 	}
 
 	objFile.close();
+	return true;
 }
 
 Object* ResourceManager::loadObject(const char* fPath) {
+	std::cout << "loading " << fPath << std::endl;
 	std::ifstream objFile(fPath);
 	if (!objFile.is_open()) {
 		std::cerr << "Can't open obj file: " << fPath << std::endl;
@@ -154,6 +171,13 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	std::string objName = getFileNameFromPath(objPath);
 	std::string folderPath = getFolderPath(objPath);
 
+	//if obj is already loaded, skip the rest
+	if (objMap.find(objName) != objMap.end()) {
+		std::cout << objName << " is already loaded." << std::endl;
+		return objMap[objName];
+	}
+
+	//if obj is not loaded
 	GLuint vao; //this vao will be shared with all meshes
 	glcheck(glGenVertexArrays(1, &vao));
 	std::vector<Mesh*> meshes;
@@ -170,6 +194,8 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	std::vector<glm::vec2> textCoords;
 	std::vector<glm::ivec3> triangles;
 
+	bool hasMaterial = false;
+
 	//--all the temporary values needed to parse
 	bool loadingMesh = false; // whether parser has began loading meshes; initially set to false
 	std::string delim = "/";
@@ -178,7 +204,7 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	int vCount = 0;
 	int currMeshTriangleCount = 0;
 	size_t aPos, bPos, cPos, a1Pos, b1Pos, c1Pos;
-	Resources::Material* currMeshMtl = NULL;
+	Resources::Material* currMeshMtl = new Resources::Material();
 	std::stringstream ss;
 	std::string line, label, mtlName, currMeshMtlName, a, b, c, currMeshName;
 	glm::vec3 point;
@@ -199,7 +225,8 @@ Object* ResourceManager::loadObject(const char* fPath) {
 		else if (label == "mtllib") {
 			ss >> mtlName;
 			std::cout << "loading " << mtlName << std::endl;
-			loadMaterialMap(matMap, (folderPath + mtlName).c_str());
+			if (loadMaterialMap(matMap, (folderPath + mtlName).c_str()))
+				hasMaterial = true;
 		}
 
 		else if (label == "v") {
@@ -223,8 +250,10 @@ Object* ResourceManager::loadObject(const char* fPath) {
 		//mesh material name
 		else if (label == "usemtl") {
 			ss >> currMeshMtlName;
-			if (matMap.find(currMeshMtlName) != matMap.end()) //if found within material map
+			if (matMap.find(currMeshMtlName) != matMap.end()) {//if found within material map
+				delete currMeshMtl; //free default mtl
 				currMeshMtl = matMap[currMeshMtlName];
+			}
 		}
 
 		else if (label == "f") {
@@ -313,7 +342,11 @@ Object* ResourceManager::loadObject(const char* fPath) {
 	glcheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	glcheck(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
-	return new Object(objName, mtlName, meshes, matMap, vao);
+	Object* obj = new Object(objName, mtlName, meshes, matMap, vao);
+	objMap[objName] = obj;
+	objList.push_back(obj);
+
+	return obj;
 }
 
 /*

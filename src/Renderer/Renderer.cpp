@@ -5,6 +5,7 @@ Shader* Renderer::currShader = NULL; //currently using shader program
 
 Camera* Renderer::cameras[cameraRole::cameraSize];
 Camera* Renderer::currCamera;
+LightSource* Renderer::currLight;
 
 void Renderer::initRenderer(Camera * cam) {
 	if (cam == NULL) {
@@ -37,24 +38,42 @@ void Renderer::draw(glm::mat4 model, Resources::Material* mat, GLuint vao, int o
 
 //note there is a bug that "bound" variable in shader is not reliable if there are more than one shader in the program
 void Renderer::drawToColorPickingFrameBuffer(glm::mat4 model, GLuint vao, int offset, int count, int colorCode) {
-	shaders[shaderRole::colorPickingShader]->bind(currCamera->view, Window::projection);
-	shaders[shaderRole::colorPickingShader]->setUniformMat4("model", model);
-	setColorCoding(colorCode);
+	Shader* shader = shaders[shaderRole::colorPickingShader];
+	shader->bind();
+	shader->setUniformMat4("model", model);
+	shader->setUniformMat4("view", currCamera->view);
+	shader->setUniformMat4("projection", Window::projection);
+	
+	//calculate rgb values from color code
+	int r = (colorCode & 0x000000FF);
+	int g = (colorCode & 0x0000FF00) >> 8;
+	int b = (colorCode & 0x00FF0000) >> 16;
+	shader->setUniorm4F("colorCode", r / 255.0f, g / 255.0f, b / 255.0f, 1.0f);
 
-	Window::bindFramebuffer(framebuffer::pickingFrame); //bind the offscreen picking framebuffer to draw on
 	glcheck(glBindVertexArray(vao));
 	glcheck(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * offset)));
-	Window::bindFramebuffer(framebuffer::defaultFrame); //switch back the default framebuffer 
-	shaders[shaderRole::colorPickingShader]->unbind();
+	shader->unbind();
+}
+
+void Renderer::drawToShadowMapFrameBuffer(glm::mat4 model, GLuint vao, int offset, int count) {
+	Shader* shadowMapS = shaders[shadowMapShader];
+	shadowMapS->bind();
+	shadowMapS->setUniformMat4("projView", currLight->projView);
+	shadowMapS->setUniformMat4("model", model);
 }
 
 /*
-	take in a material struct, and prepare the shader based on the material properties as follows:
+	take in a material struct, and prepare the main render shader based on the material properties as follows:
 	-determine shader type based on illum model
 	-send the uniform values to the shader
 */
 bool Renderer::prepShader(Resources::Material* mat) {
-	currShader->bind(currCamera->view, Window::projection);
+	currShader->bind();
+	if (mat == nullptr) { // if there isn't any material, use default material
+		return true;
+	}
+	currShader->setUniformMat4("view", currCamera->view);
+	currShader->setUniformMat4("projection", Window::projection);
 	//set up uniforms based on the shader being used
 	if (currShader == shaders[shaderRole::phongShader]) { // set up material uniforms
 		currShader->setUniformVec3("ambientColor", mat->ambient);
@@ -67,24 +86,16 @@ bool Renderer::prepShader(Resources::Material* mat) {
 	return true;
 }
 
-/*
-	set the color code uniform in the color picking shader
-*/
-bool Renderer::setColorCoding(int code)  {
-	int r = (code & 0x000000FF);
-	int g = (code & 0x0000FF00) >> 8;
-	int b = (code & 0x00FF0000) >> 16;
-	shaders[shaderRole::colorPickingShader]->setUniorm4F("colorCode", r/255.0f, g/255.0f, b/255.0f, 1.0f);
-	return true;
-}
-
 void Renderer::addShader(shaderRole sRole, Shader* s) {
 	shaders[sRole] = s;
 }
 
 bool Renderer::setShader(shaderRole sRole) {
-	if (shaders[sRole] == NULL) // shader of this role does not exist yet
+	if (shaders[sRole] == NULL) { // shader of this role does not exist yet
+		std::cout << "Shader " << sRole << " is not loaded." << std::endl;
 		return false;
+	}
+	//shaders[sRole]->bind();
 	currShader = shaders[sRole];
 	return true;
 }
@@ -98,6 +109,23 @@ bool Renderer::setCamera(cameraRole cRole) {
 		return false;
 	currCamera = cameras[cRole];
 	return true;
+}
+
+void Renderer::setLight(LightSource* light) {
+	if (light == nullptr)
+		return;
+	if (currShader == shaders[shaderRole::phongShader]) { // set up material uniforms
+		currShader->bind();
+		currShader->setUniformVec3("directionalLightDir", light->direction);
+		currShader->setUniformVec3("pointLightPos", light->position);
+	}
+}
+
+void Renderer::useShadowMap(bool t) {
+	if (t)
+		Window::bindFramebuffer(framebuffer::shadowMapFrame);
+	else
+		Window::bindFramebuffer(framebuffer::defaultFrame);
 }
 
 Camera* Renderer::getCurrCamera() {

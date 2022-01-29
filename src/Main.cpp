@@ -6,6 +6,7 @@
 
 #include "Window.h"
 #include "EngineApp.h"
+#include "UIManager.h"
 #include "Core.h"
 
 #include <unordered_map>
@@ -57,20 +58,25 @@ void beginTests() {
 
 int main(int argc, char* argv[])
 {
-	GLFWwindow* window = Window::createWindow();	
+	int initWidth = 1980;
+	int initHeight = 1001;
+	
+	GLFWwindow* window = Window::createWindow(initWidth, initHeight);	
 	if (!window) exit(EXIT_FAILURE);
 
 	print_versions();
 	setup_callbacks(window);
 	setup_opengl_settings();
 
-	//initialize the renderer
+	//initialize the renderer & ui manager
 	Renderer::initRenderer(NULL); // use default camera
 	// Initialize the shader program; exit if initialization fails.
 	if (!EngineApp::initializeProgram(window)) exit(EXIT_FAILURE);
 	// Initialize objects/pointers for rendering; exit if initialization fails.
 	if (!EngineApp::initializeObjects()) exit(EXIT_FAILURE);
-
+	UIManager ui(window, initWidth, initHeight);
+	ResourceManager::init();
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		// Clear the color and depth buffers
@@ -79,6 +85,7 @@ int main(int argc, char* argv[])
 		//updating app state
 		EngineApp::idleCallback();	
 		EngineApp::displayCallback();
+		ui.render();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);

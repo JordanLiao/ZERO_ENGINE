@@ -13,6 +13,10 @@ uniform vec3 specColor;  //ks
 uniform float specHighlight; //ns, the larger this value is, the more apparent the light dot on the surface
 uniform float dissolve; //d
 
+//lights
+uniform vec3 directionalLightDir;
+uniform vec3 pointLightPos;
+
 // You can output many things. The first vec4 type output determines the color of the fragment
 in vec3 normalOutput;
 in vec3 posOutput;
@@ -21,8 +25,9 @@ out vec4 fragColor;
 
 void main()
 {
-	vec3 lightPos = vec3(10.0, 5.0, 0.0);	
-	vec3 lightDir = normalize(lightPos - posOutput);
+	//vec3 lightPos = vec3(10.0, 5.0, 0.0);	
+	//vec3 lightDir = normalize(lightPos - posOutput);
+	vec3 lightDir = normalize(directionalLightDir);
 	vec3 norm = normalize(normalOutput);
 	
 	//diffuse lighting
@@ -37,6 +42,7 @@ void main()
 	}
 	vec3 specular = spec * specColor;  
 	
-	vec3 result = ambientColor * 0.04 + diffuse * 0.74 + specular * 0.22;
+	vec3 result = ambientColor * 0.1 + diffuse * 0.7 + specular * 0.5;
+	//vec3 result = ambientColor * 0.2 + diffuse + specular;
 	fragColor = vec4(result, 1);
 }

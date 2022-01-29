@@ -5,7 +5,8 @@
 
 enum class framebuffer {
 	defaultFrame, //GLFW managed framebuffer
-	pickingFrame //application managed framebuffer for model picking
+	pickingFrame, //application managed framebuffer for model picking
+	shadowMapFrame
 };
 
 class Window
@@ -21,7 +22,7 @@ public:
 	static glm::mat4 projection;
 
 	// Window functions
-	static GLFWwindow* createWindow();
+	static GLFWwindow* createWindow(int initWidth, int initHeight);
 	static void resizeCallback(GLFWwindow* window, int width, int height);
 	static void bindFramebuffer(framebuffer id);
 
@@ -30,8 +31,8 @@ public:
 
 private:
 	//color picking offscreen framebuffer properties
-	static GLuint pickingFramebuffer, pickingRenderbuffer;
-
+	static GLuint pickingFramebuffer, pickingRenderbuffer, pickingDepthbuffer;
+	static GLuint shadowMapFramebuffer, shadowMapDepthTexture;
 };
 
 #endif

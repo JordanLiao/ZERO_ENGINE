@@ -10,7 +10,7 @@ enum cameraRole {
 
 class Camera {
 public:
-	glm::mat4 view; //projection matrix for rendering
+	glm::mat4 view;
 	glm::vec3 eyePos, lookDirection, lookAtPoint, upVector, camLeft, camRight, camUp, camDown;
 
 	Camera();

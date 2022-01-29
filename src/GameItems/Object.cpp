@@ -5,7 +5,6 @@ Object::Object(std::string& objName, GLuint vertArrObj) {
     vao = vertArrObj;
     model = glm::mat4(1.f);
     pos = glm::vec3(0.f);
-    setColorId();
 }
 
 Object::Object(std::string& objName, std::string& mtlName, std::vector<Mesh*> & meshes, 
@@ -17,28 +16,23 @@ std::unordered_map<std::string, Resources::Material*> & materials, GLuint vertAr
     model = glm::mat4(1.f);
     pos = glm::vec3(0.f);
     vao = vertArrObj;
-    setColorId();
 }
 
 Object::~Object() {
 }
 
-/*
-    set up a unique color id for this object for color picking
-*/
-void Object::setColorId() {
-    colorId = ColorID::getNewId();
-}
-
 void Object::render(glm::mat4 m) {
+    //std::cout << "rendering " << objFileName << std::endl;
+    glm::mat4 combinedModel = m * model;
     for (int i = 0; i < meshList.size(); i++) {
-        Renderer::draw(model, meshList[i]->material, vao, meshList[i]->vertexOffset, meshList[i]->size);
+        Renderer::draw(combinedModel, meshList[i]->material, vao, meshList[i]->vertexOffset, meshList[i]->size);
     }
 }
 
-void Object::renderColorCode() {
+void Object::renderColorCode(int colorId, glm::mat4 m) {
+    glm::mat4 combinedModel = m * model;
     for (int i = 0; i < meshList.size(); i++) {
-        Renderer::drawToColorPickingFrameBuffer(model, vao, meshList[i]->vertexOffset, meshList[i]->size, colorId);
+        Renderer::drawToColorPickingFrameBuffer(combinedModel, vao, meshList[i]->vertexOffset, meshList[i]->size, colorId);
     }
 }
 

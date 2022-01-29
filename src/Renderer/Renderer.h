@@ -6,6 +6,7 @@
 #include "../ResourceTools/Resources.h"
 #include "../GameItems/Camera.h"
 #include "../Window.h"
+#include "../GameItems/LightSource.h"
 
 class Renderer {
 private:
@@ -13,17 +14,21 @@ private:
 	static Shader* currShader;
 	static Camera* cameras[]; // TODO NOTE, possibily not a good choice to keep cameras list in the renderer class becausae
 	static Camera* currCamera; // cameras are often associated with scenes and light sources.
+	static LightSource* currLight;
+
 public:
 	static void initRenderer(Camera * engineDisplayCameraq);
 
 	static void draw(glm::mat4 model, Resources::Material* mat, GLuint vao, int offset, int count);
 	static void drawToColorPickingFrameBuffer(glm::mat4 model, GLuint vao, int offset, int count, int colorCode);
+	static void drawToShadowMapFrameBuffer(glm::mat4 model, GLuint vao, int offset, int count);
 	static bool prepShader(Resources::Material* mat);
-	static bool setColorCoding(int code);
 	static void addShader(shaderRole shaderType, Shader * s);
 	static bool setShader(shaderRole sRole);
 	static void addCamera(cameraRole cRole, Camera* cam);
 	static bool setCamera(cameraRole cRole);
+	static void setLight(LightSource * light);
+	static void useShadowMap(bool);
 
 	static Camera* getCurrCamera();
 };

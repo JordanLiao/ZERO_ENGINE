@@ -69,9 +69,6 @@
     <ClCompile Include="src\GameItems\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameItems\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ResourceTools\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,6 +76,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameItems\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameItems\Instance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameItems\LightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,12 +143,6 @@
     <ClInclude Include="src\GameItems\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameItems\SceneNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameItems\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ResourceTools\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -153,6 +150,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameItems\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameItems\Instance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameItems\LightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -163,5 +166,7 @@
     <None Include="src\shaders\phongTexture.frag" />
     <None Include="src\shaders\colorPicking.vert" />
     <None Include="src\shaders\colorPicking.frag" />
+    <None Include="src\shaders\shadow.frag" />
+    <None Include="src\shaders\shadow.vert" />
   </ItemGroup>
 </Project>

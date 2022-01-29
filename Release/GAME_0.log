@@ -1,0 +1,115 @@
+﻿  Camera.cpp
+  Core.cpp
+  EngineApp.cpp
+D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(163,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(164,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Instance.cpp
+  Scene.cpp
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(21,20): warning C4018: '<': signed/unsigned mismatch
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(24,20): warning C4018: '<': signed/unsigned mismatch
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(31,20): warning C4018: '<': signed/unsigned mismatch
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(41,20): warning C4018: '<': signed/unsigned mismatch
+  Main.cpp
+  Mesh.cpp
+  Object.cpp
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Object.cpp(26,23): warning C4018: '<': signed/unsigned mismatch
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Object.cpp(33,23): warning C4018: '<': signed/unsigned mismatch
+  Renderer.cpp
+  ResourceManager.cpp
+  Resources.cpp
+  Shader.cpp
+  ColorID.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  Compiling...
+  UIManager.cpp
+D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(52,34): warning C4305: 'argument': truncation from 'double' to 'float'
+  Window.cpp
+EngineApp.obj : error LNK2001: unresolved external symbol _glfwSetInputMode
+Main.obj : error LNK2001: unresolved external symbol _glfwSwapBuffers
+Main.obj : error LNK2001: unresolved external symbol _glfwTerminate
+Main.obj : error LNK2001: unresolved external symbol _glfwSetMouseButtonCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwPollEvents
+Main.obj : error LNK2001: unresolved external symbol _glfwSetKeyCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwSetScrollCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwDestroyWindow
+Main.obj : error LNK2001: unresolved external symbol _glfwSetCursorPosCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwSetWindowSizeCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwSetErrorCallback
+Main.obj : error LNK2001: unresolved external symbol _glfwWindowShouldClose
+Renderer.obj : error LNK2001: unresolved external symbol ___glewBindVertexArray
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewEnableVertexAttribArray
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewVertexAttribPointer
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewBindBuffer
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewBufferData
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewGenVertexArrays
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewGenBuffers
+ResourceManager.obj : error LNK2001: unresolved external symbol ___glewGenerateMipmap
+Shader.obj : error LNK2001: unresolved external symbol ___glewUseProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetShaderiv
+Shader.obj : error LNK2001: unresolved external symbol ___glewCompileShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewCreateShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewCreateProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform1i
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetShaderInfoLog
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetProgramiv
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform1f
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetUniformLocation
+Shader.obj : error LNK2001: unresolved external symbol ___glewAttachShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewDeleteProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewShaderSource
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniformMatrix4fv
+Shader.obj : error LNK2001: unresolved external symbol ___glewDetachShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewGetProgramInfoLog
+Shader.obj : error LNK2001: unresolved external symbol ___glewDeleteShader
+Shader.obj : error LNK2001: unresolved external symbol ___glewLinkProgram
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform4f
+Shader.obj : error LNK2001: unresolved external symbol ___glewUniform3fv
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetClipboardString
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetInputMode
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetWindowAttrib
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetTime
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetFramebufferSize
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwSetClipboardString
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetMouseButton
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetWindowSize
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwSetCursor
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwDestroyCursor
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwCreateStandardCursor
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetJoystickAxes
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetJoystickButtons
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwSetCursorPos
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetWin32Window
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwGetCursorPos
+imgui_impl_glfw.obj : error LNK2001: unresolved external symbol _glfwSetCharCallback
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewBindSampler
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewDrawElementsBaseVertex
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewGetAttribLocation
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewDeleteVertexArrays
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewBlendFuncSeparate
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewActiveTexture
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewBlendEquation
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewBlendEquationSeparate
+imgui_impl_opengl3.obj : error LNK2001: unresolved external symbol ___glewDeleteBuffers
+Window.obj : error LNK2001: unresolved external symbol _glfwSwapInterval
+Window.obj : error LNK2001: unresolved external symbol _glfwInit
+Window.obj : error LNK2001: unresolved external symbol _glfwCreateWindow
+Window.obj : error LNK2001: unresolved external symbol _glfwWindowHint
+Window.obj : error LNK2001: unresolved external symbol _glfwMakeContextCurrent
+Window.obj : error LNK2001: unresolved external symbol ___glewRenderbufferStorage
+Window.obj : error LNK2001: unresolved external symbol ___glewCheckFramebufferStatus
+Window.obj : error LNK2001: unresolved external symbol _glfwGetMonitorWorkarea
+Window.obj : error LNK2001: unresolved external symbol ___glewFramebufferRenderbuffer
+Window.obj : error LNK2001: unresolved external symbol ___glewGenFramebuffers
+Window.obj : error LNK2001: unresolved external symbol ___glewBindRenderbuffer
+Window.obj : error LNK2001: unresolved external symbol ___glewBindFramebuffer
+Window.obj : error LNK2001: unresolved external symbol _glfwGetPrimaryMonitor
+Window.obj : error LNK2001: unresolved external symbol ___glewGenRenderbuffers
+Window.obj : error LNK2001: unresolved external symbol _glewInit@0
+Window.obj : error LNK2001: unresolved external symbol _glfwSetWindowPos
+D:\csHobby\opengl_folder\GAME_0\Release\GAME_0.exe : fatal error LNK1120: 82 unresolved externals

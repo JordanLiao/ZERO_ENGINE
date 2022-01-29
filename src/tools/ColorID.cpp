@@ -1,6 +1,6 @@
 #include "ColorID.h"
 
-int ColorID::counter = 1;
+int ColorID::counter = 3;
 
 int ColorID::getNewId()
 {

@@ -1,10 +1,11 @@
-﻿  UIManager.cpp
-D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(45,34): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  Main.cpp
+  UIManager.cpp
+D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(52,34): warning C4305: 'argument': truncation from 'double' to 'float'
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  4 of 2431 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    22 functions had inline decision re-evaluated but remain unchanged
+  5 of 3519 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    91 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\csHobby\opengl_folder\GAME_0\x64\Release\vc120.pdb'; linking object as if no debug info
   GAME_0.vcxproj -> D:\csHobby\opengl_folder\GAME_0\x64\Release\GAME_0.exe

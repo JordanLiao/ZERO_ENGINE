@@ -1,11 +1,9 @@
 #include "EngineApp.h"
 
 GLFWwindow* EngineApp::window;
-UIManager EngineApp::ui;
 
 //current moused picked object
-Object* EngineApp::focusedObject = NULL;
-std::unordered_map<int, Object*> EngineApp::colorCodeMap;
+Instance* EngineApp::focusedInstance = NULL;
 
 //mouse/keyboard states
 bool EngineApp::mousePressed[3];
@@ -14,7 +12,31 @@ double EngineApp::cursorPosition[2] = {0.0, 0.0};
 double EngineApp::prevCursorPosition[2] = {0.0, 0.0};
 bool EngineApp::keyPressed[350];
 
-Object* EngineApp::obj;
+Scene* EngineApp::currScene;
+
+bool EngineApp::initializeProgram(GLFWwindow* w) {
+	window = w;
+	Shader* simpleShader = new Shader("src/shaders/shader.vert", "src/shaders/shader.frag");
+	Shader* shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
+	Shader* colorCodeshader = new Shader("src/shaders/colorPicking.vert", "src/shaders/colorPicking.frag");
+	Shader* shadowShader = new Shader("src/shaders/shadow.vert", "src/shaders/shadow.frag");
+
+	Renderer::addShader(shaderRole::phongShader, shader);
+	Renderer::addShader(shaderRole::simpleModelShader, simpleShader);
+	Renderer::addShader(shaderRole::colorPickingShader, colorCodeshader);
+	Renderer::addShader(shaderRole::shadowMapShader, shadowShader);
+	Renderer::setShader(shaderRole::phongShader); // use phong shader initially
+	//Renderer::setShader(shaderRole::simpleModelShader);
+
+	return true;
+}
+
+bool EngineApp::initializeObjects() {
+	//obj = ResourceManager::loadObject("Assets/lowpolypine.obj");
+	//colorCodeMap[obj->colorId] = obj;
+	currScene = new Scene();
+	return true;
+}
 
 void EngineApp::idleCallback() {
 	// Perform any necessary updates here
@@ -34,24 +56,20 @@ void EngineApp::idleCallback() {
 	}
 }
 
-void EngineApp::displayCallback()
-{
-	obj->render();
-
-	ui.render();
+void EngineApp::displayCallback() {
+	currScene->render(glm::mat4(1));
 }
 
 /*
 	handle color picking:
-	--if mouse left click on any displayed object, set that object as the current focusedObject
+	--if mouse left click on any displayed object, set that object as the current focusedInstance
 */
 void EngineApp::colorPick(double x, double y) {
-	obj->renderColorCode();
+	currScene->renderColorCode(glm::mat4(1));
 	glm::vec4 colorCode = Window::getPixel1Value(framebuffer::pickingFrame, (int)x, (int)y);
 	int code = ((int)colorCode.x << 16) + ((int)colorCode.y << 8) + (int)colorCode.z;
-	std::cout << code << std::endl;
-	if (colorCodeMap.find(code) != colorCodeMap.end())
-		focusedObject = colorCodeMap[code]; 
+	//std::cout << code << std::endl;
+	focusedInstance = currScene->getInstanceFromColorCode(code); 
 }
 
 void EngineApp::moveCamera(int key) {
@@ -70,28 +88,13 @@ void EngineApp::moveCamera(int key) {
 		cam->translate(glm::vec3(0.f, -0.05f, 0.0f));
 }
 
-
-bool EngineApp::initializeProgram(GLFWwindow * w) {
-	window = w;
-	ui = UIManager(w);
-	Shader* shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
-	Shader* colorCodeshader = new Shader("src/shaders/colorPicking.vert", "src/shaders/colorPicking.frag");
-
-	Renderer::addShader(shaderRole::phongShader, shader);
-	Renderer::addShader(shaderRole::colorPickingShader, colorCodeshader);
-	Renderer::setShader(shaderRole::phongShader); // set phong shading as default
-
-	return true;
-}
-
-bool EngineApp::initializeObjects() {
-	obj = ResourceManager::loadObject("Assets/lowpolypine.obj");
-	colorCodeMap[obj->colorId] = obj;
-	return true;
-}
-
 void EngineApp::cleanUp() {
 
+}
+
+Scene* EngineApp::getCurrentScene()
+{
+	return currScene;
 }
 
 void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -102,19 +105,19 @@ void EngineApp::keyCallback(GLFWwindow* window, int key, int scancode, int actio
 		case GLFW_KEY_ESCAPE:
 			//glfwSetWindowShouldClose(window, GL_TRUE);
 			break;
-		case GLFW_KEY_G:
-			if (focusedObject != NULL) {
+		case GLFW_KEY_G: //enables object picking
+			if (focusedInstance != NULL) {
 				if (currentCursorState == cursorState::idle) {
 					currentCursorState = cursorState::picking; //go into mouse/cursor picking mode
-					std::cout << "Cursor state is now picking." << std::endl;
+					//std::cout << "Cursor state is now picking." << std::endl;
 				}
 				else if (currentCursorState == cursorState::picking) { // revert cursor state to idle
 					currentCursorState = cursorState::idle;
-					focusedObject = NULL;
+					focusedInstance = NULL;
 				}
 			}
 			break;
-		case GLFW_KEY_F:
+		case GLFW_KEY_F: //free cam that allows camera rotation and movement
 			if (currentCursorState == cursorState::idle) {
 				currentCursorState = cursorState::freeCam;
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -138,13 +141,13 @@ void EngineApp::cursor_callback(GLFWwindow* window, double currX, double currY) 
 	
 	Camera* cam = Renderer::getCurrCamera();
 	glm::vec3 relativePoint(0.0f); //camera is relative to the origin if no object is focused on
-	if (focusedObject != NULL)
-		relativePoint = focusedObject->pos;
+	if (focusedInstance != NULL)
+		relativePoint = focusedInstance->pos;
 	float dis = glm::length(glm::dot((relativePoint - cam->eyePos), cam->lookDirection));
 
 	switch (currentCursorState) {
 	case cursorState::picking: {
-		focusedObject->translate((cam->camRight * float(dx) - cam->camUp * float(dy)) /
+		focusedInstance->translate((cam->camRight * float(dx) - cam->camUp * float(dy)) /
 			SLOW_DOWN_FACTOR * dis / REF_DISTANCE);
 		}
 		break;
@@ -176,7 +179,7 @@ void EngineApp::mouse_callback(GLFWwindow* window, int button, int action, int m
 				break;
 			case cursorState::picking:
 				currentCursorState = cursorState::idle;
-				focusedObject = NULL;
+				focusedInstance = NULL;
 				break;
 			default:
 				break;

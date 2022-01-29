@@ -164,12 +164,12 @@ bool Shader::setUniorm4F(const std::string& uName, GLfloat uValue0, GLfloat uVal
 	return true;
 }
 
-void Shader::bind(glm::mat4 view, glm::mat4 proj) {
+void Shader::bind() {
 	if (bound) // if already bound, do not bound again.
 		return;
 	glcheck(glUseProgram(programID));
-	glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(view)));
-	glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(proj)));
+	//glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(view)));
+	//glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(proj)));
 	bound = true;
 }
 

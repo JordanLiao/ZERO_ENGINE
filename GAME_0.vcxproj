@@ -158,8 +158,9 @@
     <ClCompile Include="src\GameItems\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\EngineApp.cpp" />
+    <ClCompile Include="src\GameItems\Instance.cpp" />
+    <ClCompile Include="src\GameItems\LightSource.cpp" />
     <ClCompile Include="src\GameItems\Scene.cpp" />
-    <ClCompile Include="src\GameItems\Transform.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\GameItems\Mesh.cpp" />
     <ClCompile Include="src\GameItems\Object.cpp" />
@@ -182,11 +183,11 @@
     <ClInclude Include="src\GameItems\Camera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\EngineApp.h" />
+    <ClInclude Include="src\GameItems\Instance.h" />
+    <ClInclude Include="src\GameItems\LightSource.h" />
     <ClInclude Include="src\GameItems\Mesh.h" />
     <ClInclude Include="src\GameItems\Object.h" />
     <ClInclude Include="src\GameItems\Scene.h" />
-    <ClInclude Include="src\GameItems\SceneNode.h" />
-    <ClInclude Include="src\GameItems\Transform.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\ResourceTools\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
@@ -211,6 +212,8 @@
     <None Include="src\shaders\phongTexture.vert" />
     <None Include="src\shaders\shader.frag" />
     <None Include="src\shaders\shader.vert" />
+    <None Include="src\shaders\shadow.frag" />
+    <None Include="src\shaders\shadow.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

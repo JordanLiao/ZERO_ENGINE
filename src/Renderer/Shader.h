@@ -21,6 +21,7 @@ enum shaderRole {
 	simpleModelShader,
 	phongShader,
 	colorPickingShader,
+	shadowMapShader,
 	shaderSize
 };
 
@@ -43,7 +44,7 @@ public :
 	bool setUniform1I(const std::string&, GLint);
 	bool setUniorm1F(const std::string&, GLfloat);
 	bool setUniorm4F(const std::string&, GLfloat, GLfloat, GLfloat, GLfloat);
-	void bind(glm::mat4 view, glm::mat4 proj);
+	void bind();
 	void unbind();
 };
 

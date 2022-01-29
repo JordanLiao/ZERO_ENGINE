@@ -20,10 +20,11 @@ glm::vec3 Window::camLeft(-1, 0, 0);        //direction to the left of the camer
 glm::vec3 Window::camRight(1, 0, 0);        //direction to the right of the camera*/
 
 //color picking offscreen framebuffer properties
-GLuint Window::pickingFramebuffer, Window::pickingRenderbuffer;
+GLuint Window::pickingFramebuffer, Window::pickingRenderbuffer, Window::pickingDepthbuffer;
+//shadow map
+GLuint Window::shadowMapFramebuffer, Window::shadowMapDepthTexture;
 
-GLFWwindow* Window::createWindow()
-{
+GLFWwindow* Window::createWindow(int initWidth, int initHeight) {
 	// Initialize GLFW.
 	if (!glfwInit())
 	{
@@ -59,9 +60,11 @@ GLFWwindow* Window::createWindow()
 
 	//create the picking framebuffer
 	glcheck(glGenFramebuffers(1, &pickingFramebuffer));
+	//create shadow map framebuffer
+	glcheck(glGenFramebuffers(1, &shadowMapFramebuffer));
 
 	// Call the resize callback to make sure things get drawn immediately.
-	Window::resizeCallback(window, 1920, 1001);
+	Window::resizeCallback(window, initWidth, initHeight);
 
 	//check if picking buffer is complete
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
@@ -73,11 +76,11 @@ GLFWwindow* Window::createWindow()
 	return window;
 }
 
+//updating framebuffers if the screen size changes
 void Window::resizeCallback(GLFWwindow* window, int width, int height)
 {
 	Window::width = width;
 	Window::height = height;
-	std::cout << width << " " << height << std::endl;
 	//if window is minimized, do nothing to the projection matrix, else the app would crash.
 	if (width <= 0 || height <= 0)
 		return;
@@ -90,14 +93,37 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 	//update the renderbuffer attached to the offscreen framebuffers
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer)); //bind to the picking framebuffer
 	glcheck(glDeleteRenderbuffers(1, &pickingRenderbuffer)); //delete old renderbuffer
+	glcheck(glDeleteRenderbuffers(1, &pickingDepthbuffer)); //delete old depthbuffer
+	//--------------------------------------------------//
 	glcheck(glGenRenderbuffers(1, &pickingRenderbuffer));  //generate new renderbuffer
 	glcheck(glBindRenderbuffer(GL_RENDERBUFFER, pickingRenderbuffer)); //bind the renderbuffer
 	glcheck(glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA, width, height)); //allocate storage
 	glcheck(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, pickingRenderbuffer)); //attach the renderbuffer
+	//-------------------------------------------------//
+	glcheck(glGenRenderbuffers(1, &pickingDepthbuffer));  //generate new depthbuffer
+	glcheck(glBindRenderbuffer(GL_RENDERBUFFER, pickingDepthbuffer));
+	glcheck(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
+	glcheck(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, pickingDepthbuffer));
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0)); //unbind the picking framebuffer
+	//---------------------------------------------------//
+	//update shadowMap buffer size
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
+	glcheck(glDeleteTextures(1, &shadowMapDepthTexture));
+	glcheck(glGenTextures(1, &shadowMapDepthTexture));
+	glcheck(glBindTexture(GL_TEXTURE_2D, shadowMapDepthTexture));
+	glcheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
+	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL));
+	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+	glcheck(glBindTexture(GL_TEXTURE_2D, 0);
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer)));
+	glcheck(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowMapDepthTexture, 0));
+	glcheck(glDrawBuffer(GL_NONE));
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0)); //unbind the picking framebuffer
 }
 
 void Window::bindFramebuffer(framebuffer id) {
+	//std::cout << "binding framebuffer" << std::endl;
 	if (id == framebuffer::defaultFrame) {
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 	}
@@ -113,7 +139,6 @@ glm::vec4 Window::getPixel1Value(framebuffer frame, int x, int y)
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 	}
 	else if (frame == framebuffer::pickingFrame) {
-		//std::cout << "binding to picking framebuffer" << std::endl;
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
 	}
 	glcheck(glReadBuffer(GL_COLOR_ATTACHMENT0));
