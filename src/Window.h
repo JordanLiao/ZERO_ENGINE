@@ -12,11 +12,13 @@ enum class framebuffer {
 class Window
 {
 public:
+	static GLuint shadowMapDepthTexture;
 
 	// Window Properties
 	static int width;
 	static int height;
 	static const char* windowTitle;
+	static int shadowTextureSize;
 
 	static double near, far;
 	static glm::mat4 projection;
@@ -28,11 +30,12 @@ public:
 
 	//value access functions
 	static glm::vec4 getPixel1Value(framebuffer frame, int x, int y);
+	static float getPixelDepthValue(framebuffer frame, int x, int y);
 
 private:
 	//color picking offscreen framebuffer properties
 	static GLuint pickingFramebuffer, pickingRenderbuffer, pickingDepthbuffer;
-	static GLuint shadowMapFramebuffer, shadowMapDepthTexture;
+	static GLuint shadowMapFramebuffer;
 };
 
 #endif

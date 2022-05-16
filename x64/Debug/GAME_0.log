@@ -1,15 +1,4 @@
-﻿  EngineApp.cpp
-D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(161,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\csHobby\opengl_folder\GAME_0\src\EngineApp.cpp(162,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Instance.cpp
-  LightSource.cpp
-  Object.cpp
+﻿  LightSource.cpp
   Scene.cpp
-  Main.cpp
-  Renderer.cpp
-  Shader.cpp
-  ResourceManager.cpp
-  UIManager.cpp
-D:\csHobby\opengl_folder\GAME_0\src\UIManager.cpp(61,34): warning C4305: 'argument': truncation from 'double' to 'float'
   Generating Code...
   GAME_0.vcxproj -> D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.exe

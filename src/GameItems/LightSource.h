@@ -12,13 +12,14 @@ enum lightType {
 typedef struct LightSource {
 	glm::vec3 position;
 	glm::vec3 direction;
+	glm::vec3 color;
 	lightType type;
 
 	glm::mat4 view;
 	glm::mat4 proj;
 	glm::mat4 projView;
 
-	LightSource(glm::vec3 pos, glm::vec3 dir, lightType type);
+	LightSource(glm::vec3 pos, glm::vec3 dir, lightType type, glm::vec3 c);
 } LightSource;
 
 #endif

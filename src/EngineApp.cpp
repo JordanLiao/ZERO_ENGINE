@@ -12,29 +12,39 @@ double EngineApp::cursorPosition[2] = {0.0, 0.0};
 double EngineApp::prevCursorPosition[2] = {0.0, 0.0};
 bool EngineApp::keyPressed[350];
 
+/************************************************************************************************
+	NOTE!!:
+		Static objects need to have heap allocation using pointer because not every dependency might
+	be initialized at the beginning if the program were to left to init them on its own.
+		Declare pointers down here, and init them in the initializeObject() function.
+*/
 Scene* EngineApp::currScene;
+ShadowTester * EngineApp::shadowTest;
+/************************************************************************************************/
 
 bool EngineApp::initializeProgram(GLFWwindow* w) {
 	window = w;
 	Shader* simpleShader = new Shader("src/shaders/shader.vert", "src/shaders/shader.frag");
-	Shader* shader = new Shader("src/shaders/phongTexture.vert", "src/shaders/phongTexture.frag");
+	Shader* phongTextureShader = new Shader("src/shaders/phong.vert", "src/shaders/phong.frag");
 	Shader* colorCodeshader = new Shader("src/shaders/colorPicking.vert", "src/shaders/colorPicking.frag");
 	Shader* shadowShader = new Shader("src/shaders/shadow.vert", "src/shaders/shadow.frag");
-
-	Renderer::addShader(shaderRole::phongShader, shader);
+	Shader* phongTextureShadowShader = new Shader("src/shaders/phongShadow.vert", "src/shaders/phongShadow.frag");
+	Shader* shadowInspectionShader = new Shader("src/shaders/phong.vert", "src/shaders/shadowInspection.frag");
+	
+	Renderer::addShader(shaderRole::phongShader, phongTextureShader);
 	Renderer::addShader(shaderRole::simpleModelShader, simpleShader);
 	Renderer::addShader(shaderRole::colorPickingShader, colorCodeshader);
 	Renderer::addShader(shaderRole::shadowMapShader, shadowShader);
-	Renderer::setShader(shaderRole::phongShader); // use phong shader initially
-	//Renderer::setShader(shaderRole::simpleModelShader);
+	Renderer::addShader(shaderRole::phongShadowShader, phongTextureShadowShader);
+	Renderer::addShader(shaderRole::shadowInspectionShader, shadowInspectionShader);
 
 	return true;
 }
 
 bool EngineApp::initializeObjects() {
-	//obj = ResourceManager::loadObject("Assets/lowpolypine.obj");
-	//colorCodeMap[obj->colorId] = obj;
 	currScene = new Scene();
+	shadowTest = new ShadowTester();
+
 	return true;
 }
 
@@ -58,11 +68,12 @@ void EngineApp::idleCallback() {
 
 void EngineApp::displayCallback() {
 	currScene->render(glm::mat4(1));
+	//shadowTest->render();
 }
 
 /*
 	handle color picking:
-	--if mouse left click on any displayed object, set that object as the current focusedInstance
+	if mouse left click on any displayed object, set that object as the current focusedInstance
 */
 void EngineApp::colorPick(double x, double y) {
 	currScene->renderColorCode(glm::mat4(1));
@@ -176,6 +187,16 @@ void EngineApp::mouse_callback(GLFWwindow* window, int button, int action, int m
 			switch (currentCursorState) {
 			case cursorState::idle:
 				colorPick(cursorPosition[0], cursorPosition[1]);
+				
+				//also in addition to color pick, print the depth map's depth value
+				std::cout << "depth map pixel value: " << Window::getPixelDepthValue(framebuffer::shadowMapFrame, 
+				cursorPosition[0], cursorPosition[1]) << std::endl;
+
+				//print the pixel's color value
+				//glm::vec4 color = Window::getPixel1Value(framebuffer::defaultFrame, cursorPosition[0], cursorPosition[1]);
+				//std::cout << cursorPosition[0] << " " << cursorPosition[1] << " : " << color[0] << " " << color[1] << " " <<
+					//color[2] << std::endl;
+				
 				break;
 			case cursorState::picking:
 				currentCursorState = cursorState::idle;

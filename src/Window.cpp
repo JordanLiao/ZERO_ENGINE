@@ -3,12 +3,14 @@
 // Window Properties
 int Window::width;
 int Window::height;
+int Window::shadowTextureSize = 1600;
 const char* Window::windowTitle = "ZeroEngine App";
 
 //projection matrix
-double Window::near = .1f;
-double Window::far = 1000.f;
-glm::mat4 Window::projection = glm::mat4(1);
+double Window::near = 0.1;
+double Window::far = 1000.0;
+glm::mat4 Window::projection = glm::mat4(1); // initially set to the identity matrix because window size is unknown, resizecallback()
+                                             // would give the projection matrix an actual value.
 
 //legacy code, camera logic used to in window class
 // View Matrix:
@@ -63,11 +65,36 @@ GLFWwindow* Window::createWindow(int initWidth, int initHeight) {
 	//create shadow map framebuffer
 	glcheck(glGenFramebuffers(1, &shadowMapFramebuffer));
 
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
+	glcheck(glGenTextures(1, &shadowMapDepthTexture));
+	glcheck(glBindTexture(GL_TEXTURE_2D, shadowMapDepthTexture));
+	glcheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowTextureSize, shadowTextureSize, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
+	//glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE,GL_COMPARE_REF_TO_TEXTURE));
+	//glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL));
+	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+	//glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	//glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glcheck(glBindTexture(GL_TEXTURE_2D, 0));
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
+	glcheck(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowMapDepthTexture, 0));
+	glcheck(glDrawBuffer(GL_NONE));
+	glcheck(glReadBuffer(GL_NONE));
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0)); //unbind the picking framebuffer
+
 	// Call the resize callback to make sure things get drawn immediately.
 	Window::resizeCallback(window, initWidth, initHeight);
 
 	//check if picking buffer is complete
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		std::cout << "Framebuffer Error" << '\n';
+	}
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 		std::cout << "Framebuffer Error" << '\n';
 	}
@@ -79,11 +106,12 @@ GLFWwindow* Window::createWindow(int initWidth, int initHeight) {
 //updating framebuffers if the screen size changes
 void Window::resizeCallback(GLFWwindow* window, int width, int height)
 {
-	Window::width = width;
-	Window::height = height;
 	//if window is minimized, do nothing to the projection matrix, else the app would crash.
 	if (width <= 0 || height <= 0)
 		return;
+
+	Window::width = width;
+	Window::height = height;
 	// Set the viewport size.
 	glcheck(glViewport(0, 0, width, height));
 	// Set the projection matrix.
@@ -94,41 +122,34 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer)); //bind to the picking framebuffer
 	glcheck(glDeleteRenderbuffers(1, &pickingRenderbuffer)); //delete old renderbuffer
 	glcheck(glDeleteRenderbuffers(1, &pickingDepthbuffer)); //delete old depthbuffer
-	//--------------------------------------------------//
+	
 	glcheck(glGenRenderbuffers(1, &pickingRenderbuffer));  //generate new renderbuffer
 	glcheck(glBindRenderbuffer(GL_RENDERBUFFER, pickingRenderbuffer)); //bind the renderbuffer
 	glcheck(glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA, width, height)); //allocate storage
 	glcheck(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, pickingRenderbuffer)); //attach the renderbuffer
-	//-------------------------------------------------//
+	
 	glcheck(glGenRenderbuffers(1, &pickingDepthbuffer));  //generate new depthbuffer
 	glcheck(glBindRenderbuffer(GL_RENDERBUFFER, pickingDepthbuffer));
 	glcheck(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
 	glcheck(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, pickingDepthbuffer));
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0)); //unbind the picking framebuffer
 	//---------------------------------------------------//
-	//update shadowMap buffer size
-	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
-	glcheck(glDeleteTextures(1, &shadowMapDepthTexture));
-	glcheck(glGenTextures(1, &shadowMapDepthTexture));
-	glcheck(glBindTexture(GL_TEXTURE_2D, shadowMapDepthTexture));
-	glcheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
-	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL));
-	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-	glcheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-	glcheck(glBindTexture(GL_TEXTURE_2D, 0);
-	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer)));
-	glcheck(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowMapDepthTexture, 0));
-	glcheck(glDrawBuffer(GL_NONE));
-	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0)); //unbind the picking framebuffer
+	
 }
 
 void Window::bindFramebuffer(framebuffer id) {
 	//std::cout << "binding framebuffer" << std::endl;
 	if (id == framebuffer::defaultFrame) {
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+		glcheck(glViewport(0, 0, width, height));
 	}
 	else if (id == framebuffer::pickingFrame) {
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
+		glcheck(glViewport(0, 0, width, height));
+	}
+	else if (id == framebuffer::shadowMapFrame) {
+		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
+		glcheck(glViewport(0, 0, shadowTextureSize, shadowTextureSize));
 	}
 }
 
@@ -141,10 +162,26 @@ glm::vec4 Window::getPixel1Value(framebuffer frame, int x, int y)
 	else if (frame == framebuffer::pickingFrame) {
 		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
 	}
-	glcheck(glReadBuffer(GL_COLOR_ATTACHMENT0));
 	glcheck(glReadPixels(x, height - y, 1, 1, GL_BGRA, GL_UNSIGNED_BYTE, data));
 	// Return to onscreen rendering:
 	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 	return glm::vec4((int)data[0], (int)data[1], (int)data[2], (int)data[3]);
+}
+
+float Window::getPixelDepthValue(framebuffer frame, int x, int y) {
+	if (frame == framebuffer::defaultFrame) {
+		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+	}
+	else if (frame == framebuffer::pickingFrame) {
+		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, pickingFramebuffer));
+	}
+	else if (frame == framebuffer::shadowMapFrame) {
+		glcheck(glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFramebuffer));
+	}
+	
+	float data;
+	glcheck(glReadPixels(x, height - y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &data));
+	glcheck(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+	return data;
 }
 

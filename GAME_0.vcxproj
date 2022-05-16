@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -161,9 +161,11 @@
     <ClCompile Include="src\GameItems\Instance.cpp" />
     <ClCompile Include="src\GameItems\LightSource.cpp" />
     <ClCompile Include="src\GameItems\Scene.cpp" />
+    <ClCompile Include="src\GameItems\ShadowTester.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\GameItems\Mesh.cpp" />
     <ClCompile Include="src\GameItems\Object.cpp" />
+    <ClCompile Include="src\Renderer\InspectionPlane.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\ResourceTools\ResourceManager.cpp" />
     <ClCompile Include="src\ResourceTools\Resources.cpp" />
@@ -188,6 +190,8 @@
     <ClInclude Include="src\GameItems\Mesh.h" />
     <ClInclude Include="src\GameItems\Object.h" />
     <ClInclude Include="src\GameItems\Scene.h" />
+    <ClInclude Include="src\GameItems\ShadowTester.h" />
+    <ClInclude Include="src\Renderer\InspectionPlane.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\ResourceTools\ResourceManager.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
@@ -208,12 +212,15 @@
   <ItemGroup>
     <None Include="src\shaders\colorPicking.frag" />
     <None Include="src\shaders\colorPicking.vert" />
-    <None Include="src\shaders\phongTexture.frag" />
-    <None Include="src\shaders\phongTexture.vert" />
+    <None Include="src\shaders\phong.frag" />
+    <None Include="src\shaders\phong.vert" />
+    <None Include="src\shaders\phongShadow.frag" />
+    <None Include="src\shaders\phongShadow.vert" />
     <None Include="src\shaders\shader.frag" />
     <None Include="src\shaders\shader.vert" />
     <None Include="src\shaders\shadow.frag" />
     <None Include="src\shaders\shadow.vert" />
+    <None Include="src\shaders\shadowInspection.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

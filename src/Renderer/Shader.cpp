@@ -1,8 +1,9 @@
 
 #include "shader.h"
 
+Shader* Shader::currBoundShader = nullptr;
+
 Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath) {
-	bound = false;
 	//pre assign the shader program id to be 0 for later error checking
 	//it should not be zero if shader is compiled and attached correctly
 	programID = 0;
@@ -165,16 +166,17 @@ bool Shader::setUniorm4F(const std::string& uName, GLfloat uValue0, GLfloat uVal
 }
 
 void Shader::bind() {
-	if (bound) // if already bound, do not bound again.
+	if (this == currBoundShader) // if already bound, do not bound again.
 		return;
 	glcheck(glUseProgram(programID));
-	//glcheck(glUniformMatrix4fv(getUniformLocation("view"), 1, false, glm::value_ptr(view)));
-	//glcheck(glUniformMatrix4fv(getUniformLocation("projection"), 1, false, glm::value_ptr(proj)));
-	bound = true;
+	currBoundShader = this;
 }
 
-void Shader::unbind() 
-{
+void Shader::unbind() {
 	glcheck(glUseProgram(0));
-	bound = false;
+	currBoundShader = nullptr;
+}
+
+bool Shader::isBound() {
+	return this == currBoundShader;
 }

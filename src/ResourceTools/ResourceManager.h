@@ -12,7 +12,7 @@
 #include "Resources.h"
 #include "../GameItems/Mesh.h"
 #include "../GameItems/Instance.h"
-#include "../GameItems/Scene.h"
+//#include "../GameItems/Scene.h"
 
 class ResourceManager {
 private:

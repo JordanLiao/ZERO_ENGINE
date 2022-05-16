@@ -84,6 +84,12 @@
     <ClCompile Include="src\GameItems\LightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\InspectionPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameItems\ShadowTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tools\stb_image.h">
@@ -158,15 +164,24 @@
     <ClInclude Include="src\GameItems\LightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\InspectionPlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameItems\ShadowTester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\phongTexture.vert" />
+    <None Include="src\shaders\phong.vert" />
     <None Include="src\shaders\shader.frag" />
     <None Include="src\shaders\shader.vert" />
-    <None Include="src\shaders\phongTexture.frag" />
+    <None Include="src\shaders\phong.frag" />
     <None Include="src\shaders\colorPicking.vert" />
     <None Include="src\shaders\colorPicking.frag" />
     <None Include="src\shaders\shadow.frag" />
     <None Include="src\shaders\shadow.vert" />
+    <None Include="src\shaders\phongShadow.frag" />
+    <None Include="src\shaders\phongShadow.vert" />
+    <None Include="src\shaders\shadowInspection.frag" />
   </ItemGroup>
 </Project>

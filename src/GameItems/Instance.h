@@ -8,10 +8,9 @@
 #include "Object.h"
 
 class Instance {
-private:
+public:
 	glm::mat4 model;
 	Object* object; //the geometry that this instance is based on; multiple instances may use the same object
-public:
 	int colorId;
 	glm::vec3 pos;
 	std::string instanceName;
@@ -19,8 +18,6 @@ public:
 	Instance(Object *);
 	~Instance();
 
-	void render(glm::mat4);
-	void renderColorCode(glm::mat4);
 	//transformation functions
 	void translate(glm::vec3 trans);
 };

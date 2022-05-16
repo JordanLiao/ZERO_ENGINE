@@ -6,7 +6,8 @@ Scene::Scene() {
 	scaleAmount = 1.0f;
 	model = glm::mat4(1);
 
-	light = new LightSource(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 10.f), lightType::directional);
+	light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::directional, glm::vec3(0.9f, 0.9f, 0.9f));
+	//light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::point, glm::vec3(0.9f, 0.9f, 0.9f));
 }
 
 Scene::~Scene() {
@@ -20,16 +21,26 @@ Scene::~Scene() {
 }
 
 void Scene::render(glm::mat4 m) {
-	//prep shadow map
-	Renderer::useShadowMap(true);
-	
-	Renderer::useShadowMap(false);
-	
-	Renderer::setLight(light);
 	glm::mat4 currModel = m * model;
+	
+	//prep shadow map
+	Window::bindFramebuffer(framebuffer::shadowMapFrame);
+	glcheck(glClear(GL_DEPTH_BUFFER_BIT));
+	//glEnable(GL_DEPTH_TEST);
 	for (int i = 0; i < instances.size(); i++) {
-		instances[i]->render(currModel);
+		Renderer::drawInstance(instances[i], currModel, shadowMapShader, light);
 	}
+	Window::bindFramebuffer(framebuffer::defaultFrame);
+	
+	// in the future scene needs to decide which shader to draw which instance
+	glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	for (int i = 0; i < instances.size(); i++) {
+		Renderer::drawInstance(instances[i], currModel, phongShadowShader, light);
+	}
+
+	//-----------debugging purpose----------//
+	//Renderer::drawShadowInspection();
+	//--------------------------------------//
 }
 
 /*
@@ -40,7 +51,9 @@ void Scene::renderColorCode(glm::mat4 m) {
 	glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	glm::mat4 currModel = m * model;
 	for (int i = 0; i < instances.size(); i++) {
-		instances[i]->renderColorCode(currModel);
+		Instance* inst = instances[i];
+		//std::cout << "color picking" << std::endl;		
+		Renderer::drawInstanceToColorPickingFrameBuffer(inst, currModel, inst->colorId);
 	}
 	Window::bindFramebuffer(framebuffer::defaultFrame); //switch back the default framebuffer 
 }

@@ -251,6 +251,7 @@ Object* ResourceManager::loadObject(const char* fPath) {
 		else if (label == "usemtl") {
 			ss >> currMeshMtlName;
 			if (matMap.find(currMeshMtlName) != matMap.end()) {//if found within material map
+				std::cout << "delete default mtl" << std::endl;
 				delete currMeshMtl; //free default mtl
 				currMeshMtl = matMap[currMeshMtlName];
 			}
@@ -297,10 +298,10 @@ Object* ResourceManager::loadObject(const char* fPath) {
 				Mesh* mesh = new Mesh(currMeshName, currMeshMtl,
 					vCount - 3 * currMeshTriangleCount, 3 * currMeshTriangleCount);
 				meshes.push_back(mesh);
+				currMeshMtl = NULL;
 			}
 			loadingMesh = true;
 			//reset mesh temporaries
-			currMeshMtl = NULL;
 			currMeshTriangleCount = 0;
 			ss >> currMeshName;
 		}

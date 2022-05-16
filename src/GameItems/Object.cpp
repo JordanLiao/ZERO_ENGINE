@@ -21,7 +21,7 @@ std::unordered_map<std::string, Resources::Material*> & materials, GLuint vertAr
 Object::~Object() {
 }
 
-void Object::render(glm::mat4 m) {
+/*void Object::render(glm::mat4 m) {
     //std::cout << "rendering " << objFileName << std::endl;
     glm::mat4 combinedModel = m * model;
     for (int i = 0; i < meshList.size(); i++) {
@@ -34,7 +34,7 @@ void Object::renderColorCode(int colorId, glm::mat4 m) {
     for (int i = 0; i < meshList.size(); i++) {
         Renderer::drawToColorPickingFrameBuffer(combinedModel, vao, meshList[i]->vertexOffset, meshList[i]->size, colorId);
     }
-}
+}*/
 
 void Object::setMeshList(std::vector<Mesh*>& mList)
 {

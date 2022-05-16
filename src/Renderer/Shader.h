@@ -20,16 +20,18 @@ enum class shaderType {
 enum shaderRole {
 	simpleModelShader,
 	phongShader,
+	phongShadowShader,
 	colorPickingShader,
 	shadowMapShader,
+	shadowInspectionShader,
 	shaderSize
 };
 
 class Shader {
 private: 
+	static Shader* currBoundShader;
 	GLuint programID;
 	std::unordered_map<std::string, GLint> uniformMap;
-	bool bound; //whether this shader object is already bound
 
 	//methods
 	GLuint LoadSingleShader(const char* shaderFilePath, shaderType type);
@@ -46,6 +48,7 @@ public :
 	bool setUniorm4F(const std::string&, GLfloat, GLfloat, GLfloat, GLfloat);
 	void bind();
 	void unbind();
+	bool isBound();
 };
 
 

@@ -10,14 +10,6 @@ Instance::Instance(Object* obj) {
 Instance::~Instance() {
 }
 
-void Instance::render(glm::mat4 m) {
-    object->render(m * model);
-}
-
-void Instance::renderColorCode(glm::mat4 m) {
-    object->renderColorCode(colorId, m * model);
-}
-
 void Instance::translate(glm::vec3 trans) {
     pos += trans;
     model = glm::translate(pos);

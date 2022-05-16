@@ -6,6 +6,7 @@
 #include "../Core.h"
 #include "Instance.h"
 #include "LightSource.h"
+#include "../Renderer/Renderer.h"
 
 class Scene {
 private:

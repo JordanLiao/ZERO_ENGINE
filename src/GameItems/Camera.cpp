@@ -1,8 +1,8 @@
 #include "Camera.h"
 
 Camera::Camera() {
-	eyePos = glm::vec3(0.f, 6.f, 8.f);
-	lookDirection = glm::normalize(glm::vec3(0.f, -.5, -1.f));
+	eyePos = glm::vec3(0.f, 5.f, 10.f);
+	lookDirection = glm::normalize(glm::vec3(0.f, -5.f, -10.f));
 	lookAtPoint = eyePos + lookDirection;
 	upVector = glm::vec3(0.f, 1.0f, 0.f);
 	camLeft = glm::normalize(glm::cross(upVector, lookAtPoint - eyePos));

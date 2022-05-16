@@ -91,7 +91,7 @@ void UIManager::showResourceDock() {
     ImGui::SetNextItemOpen(displayResources);
     if (displayResources = ImGui::CollapsingHeader("Loaded Resources")) {
         //loop through all the loaded objects
-        std::list<Object*>::iterator it = ResourceManager::objList.begin();
+        std::list<Object*>::iterator it = ResourceManager::objList.begin(); // for each obj file loaded
         while (it != ResourceManager::objList.end()) {
             if (ImGui::TreeNode((*it)->objFileName.c_str())) {
                 //ImGui::Text((*it)->objFileName.c_str());
@@ -108,9 +108,9 @@ void UIManager::showResourceDock() {
                 std::vector<Mesh*>::iterator meshIt = (*it)->meshList.begin();
                 while (meshIt != (*it)->meshList.end()) {
                     if (ImGui::TreeNode((*meshIt)->meshName.c_str())) {
-                        //ImGui::InputFloat("Diff R", &((*meshIt)->material->diffuse.x));
-                        //ImGui::InputFloat("Diff G", &((*meshIt)->material->diffuse.y));
-                        //ImGui::InputFloat("Diff B", &((*meshIt)->material->diffuse.z));
+                        //std::cout << "ambX " << (*meshIt)->material->ambient.x << std::endl;
+                        //std::cout << "ambY " << (*meshIt)->material->ambient.y << std::endl;
+                        //std::cout << "ambZ " << (*meshIt)->material->ambient.z << std::endl;
                         ImGui::SliderFloat("Amb R", &((*meshIt)->material->ambient.x), 0.0f, 1.0f, "R = %.2f");
                         ImGui::SliderFloat("Amb G", &((*meshIt)->material->ambient.y), 0.0f, 1.0f, "G = %.2f");
                         ImGui::SliderFloat("Amb B", &((*meshIt)->material->ambient.z), 0.0f, 1.0f, "B = %.2f");
