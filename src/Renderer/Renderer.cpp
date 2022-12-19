@@ -53,7 +53,7 @@ void Renderer::drawInstance(Instance* inst, glm::mat4 m, shaderRole sRole, Light
 	
 	setLight(light, sRole);
 
-	//if drawing with shadow
+	//set the uniforms based on the shader type
 	if (sRole == phongShadowShader) { 
 		if (light == nullptr) {
 			std::cerr << "phong shadow shader requires a light source." << std::endl;
@@ -74,12 +74,13 @@ void Renderer::drawInstance(Instance* inst, glm::mat4 m, shaderRole sRole, Light
 	}
 
 	glcheck(glBindVertexArray(instObj->vao));
-	for (int i = 0; i < instObj->meshList.size(); i++) {
+	int meshListSize = instObj->meshList.size();
+	for (int i = 0; i < meshListSize; i++) {
 		Mesh* mesh = instObj->meshList[i];
 		if (sRole != shadowMapShader) {
 			prepMaterial(mesh->material, shader);
 		}
-		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->vertexOffset)));
+		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->indexOffset)));
 	}
 }
 
@@ -119,7 +120,7 @@ void Renderer::drawInstanceToColorPickingFrameBuffer(Instance * inst, glm::mat4 
 	glcheck(glBindVertexArray(instObj->vao));
 	for (int i = 0; i < instObj->meshList.size(); i++) {
 		Mesh* mesh = instObj->meshList[i];
-		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->vertexOffset)));
+		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->indexOffset)));
 	}
 
 	//shader->unbind();
@@ -135,7 +136,7 @@ void Renderer::drawInstanceToShadowMapFrameBuffer(Instance* inst, glm::mat4 mode
 	glcheck(glBindVertexArray(instObj->vao));
 	for (int i = 0; i < instObj->meshList.size(); i++) {
 		Mesh* mesh = instObj->meshList[i];
-		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->vertexOffset)));
+		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->indexOffset)));
 	}
 }
 
@@ -152,7 +153,7 @@ void Renderer::drawShadowInspection() {
 	glcheck(glBindVertexArray(instObj->vao));
 	for (int i = 0; i < instObj->meshList.size(); i++) {
 		Mesh* mesh = instObj->meshList[i];
-		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->vertexOffset)));
+		glcheck(glDrawElements(GL_TRIANGLES, mesh->size, GL_UNSIGNED_INT, (GLvoid*)(sizeof(GLuint) * mesh->indexOffset)));
 	}
 }
 

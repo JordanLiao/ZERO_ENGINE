@@ -8,6 +8,19 @@ Scene::Scene() {
 
 	light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::directional, glm::vec3(0.9f, 0.9f, 0.9f));
 	//light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::point, glm::vec3(0.9f, 0.9f, 0.9f));
+
+	Object* cubes = ResourceManager::loadObject("Assets/cubes.obj");
+
+	Object* ground = ResourceManager::loadObject("Assets/ground.obj");
+	Instance* groundInst = new Instance(ground);
+	
+	Object* lowpolypine = ResourceManager::loadObject("Assets/lowpolypine.obj");
+	Object* lowpolypillar = ResourceManager::loadObject("Assets/lowpolypillar.obj");
+	
+	glm::mat4 trans = glm::translate(glm::vec3(0.f, 0.f, 0.f));
+	groundInst->model = trans * groundInst->model;
+	colorCodeMap[groundInst->colorId] = groundInst;
+	instances.push_back(groundInst);
 }
 
 Scene::~Scene() {
@@ -32,6 +45,7 @@ void Scene::render(glm::mat4 m) {
 	}
 	Window::bindFramebuffer(framebuffer::defaultFrame);
 	
+
 	// in the future scene needs to decide which shader to draw which instance
 	glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	for (int i = 0; i < instances.size(); i++) {

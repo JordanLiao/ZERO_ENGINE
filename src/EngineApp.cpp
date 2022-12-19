@@ -19,7 +19,7 @@ bool EngineApp::keyPressed[350];
 		Declare pointers down here, and init them in the initializeObject() function.
 */
 Scene* EngineApp::currScene;
-ShadowTester * EngineApp::shadowTest;
+//ShadowTester * EngineApp::shadowTest;
 /************************************************************************************************/
 
 bool EngineApp::initializeProgram(GLFWwindow* w) {
@@ -43,7 +43,7 @@ bool EngineApp::initializeProgram(GLFWwindow* w) {
 
 bool EngineApp::initializeObjects() {
 	currScene = new Scene();
-	shadowTest = new ShadowTester();
+	//shadowTest = new ShadowTester();
 
 	return true;
 }

@@ -10,7 +10,16 @@
 #include "Core.h"
 
 #include "EngineApp.h"
-#include "ResourceTools/ResourceManager.h"
+#include "ResourceManagement/ResourceManager.h"
+
+namespace UIConstants {
+	//constants
+	static int leftPaneWidth = 300;
+	static int rightPaneWidth = 350;
+
+	static int resourceDockHeight = 500;
+	static int sceneEditorHeight = 400;
+}
 
 class UIManager {
 private:
@@ -28,9 +37,10 @@ public:
 	void updateWindowSize(int w, int h);
 
 	//all the ui components
-	void showTopMenu();
-	void showResourceDock();
-	void showSceneEditor();
+	ImVec2 showTopMenu();
+	ImVec2 showResourceDock();
+	ImVec2 showSceneEditor();
+	ImVec2 showInstanceProperties();
 };
 
 #endif // _UIMANAGER_H_

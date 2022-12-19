@@ -1,4 +1,5 @@
 #include "UIManager.h"
+using namespace UIConstants;
 
 UIManager::UIManager() {
     window = NULL;
@@ -12,6 +13,7 @@ UIManager::UIManager(GLFWwindow* w, int width, int height) {
     clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Setup Dear ImGui context
+    //glfwMakeContextCurrent(window);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -22,7 +24,7 @@ UIManager::UIManager(GLFWwindow* w, int width, int height) {
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
     ImGui_ImplGlfw_InitForOpenGL(w, true);
-
+    ImGui_ImplOpenGL3_Init();
     ImGui_ImplOpenGL3_NewFrame();
 }
 
@@ -40,9 +42,16 @@ void UIManager::render() {
 
     //select and show the ui components
     ImGui::ShowDemoWindow();
-    showTopMenu();
-    showResourceDock();
-    showSceneEditor();
+    ImVec2 menuSize = showTopMenu();
+
+    ImGui::SetNextWindowPos(ImVec2(0, menuSize.y));
+    ImVec2 resourceDockSize = showResourceDock();
+
+    ImGui::SetNextWindowPos(ImVec2(windowWidth - rightPaneWidth, menuSize.y));
+    ImVec2 sceneEditorSize = showSceneEditor();
+
+    ImGui::SetNextWindowPos(ImVec2(windowWidth - rightPaneWidth, menuSize.y + sceneEditorHeight));
+    ImVec2 instancePropertiesSize = showInstanceProperties();
     //
 
     // Rendering
@@ -55,8 +64,9 @@ void UIManager::updateWindowSize(int w, int h) {
     windowWidth = w;
 }
 
-void UIManager::showTopMenu() {
+ImVec2 UIManager::showTopMenu() {
     ImGui::BeginMainMenuBar();
+    ImVec2 size = ImGui::GetWindowSize();
     //
     ImGui::SetWindowFontScale(1.4);
     ImGui::MenuItem("File", NULL);
@@ -64,16 +74,15 @@ void UIManager::showTopMenu() {
     ImGui::MenuItem("Edit", NULL);
     ImGui::Spacing();
     ImGui::MenuItem("Project", NULL);
-    ImVec2 menuSize = ImGui::GetWindowSize();
     //
     ImGui::EndMainMenuBar();
-    ImGui::SetNextWindowPos(ImVec2(0, menuSize.y));
+    return size;
 }
 
-void UIManager::showResourceDock() {
-    ImGui::Begin("Resources");
-    ImVec2 windowSize(300, 500);
-    ImGui::SetWindowSize(windowSize);
+ImVec2 UIManager::showResourceDock() {
+    ImGui::Begin("Resources", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+    ImGui::SetWindowSize(ImVec2(leftPaneWidth, resourceDockHeight));
+    ImVec2 size = ImGui::GetWindowSize();
 
     //loading dock
     ImGui::PushItemWidth(180.f);
@@ -136,30 +145,46 @@ void UIManager::showResourceDock() {
     }
 
     ImGui::End();
+    return size;
 }
 
-void UIManager::showSceneEditor() {
-    ImGui::Begin("Scene Editor");
-    ImVec2 windowSize(300, 500);
-    ImGui::SetWindowSize(windowSize);
+ImVec2 UIManager::showSceneEditor() {
+    ImGui::Begin("Scene Editor", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+    ImGui::SetWindowSize(ImVec2(rightPaneWidth, sceneEditorHeight));
+    ImVec2 size = ImGui::GetWindowSize();
 
     static bool displaySceneObjects = true;
     ImGui::SetNextItemOpen(displaySceneObjects);
-    if (displaySceneObjects = ImGui::CollapsingHeader("Scene Objects")) {
+    if (displaySceneObjects = ImGui::CollapsingHeader("Scene Instances")) {
         //loop through all the instantiated objects
         std::vector<Instance*> sceneInstanceList = EngineApp::getCurrentScene()->getInstanceList();
         std::vector<Instance*>::iterator it = sceneInstanceList.begin();
         while (it != sceneInstanceList.end()) {
-            ImGui::Text((*it)->instanceName.c_str()); // list the unique instance color id
-            //ImGui::SameLine();
-            ImGui::PushID((*it)->instanceName.c_str());
-            ImGui::PopID();
+            if (ImGui::TreeNode((*it)->instanceName.c_str())) { // list the unique instance color id
+                ImGui::PushID((*it)->instanceName.c_str());
+                
+                ImGui::SameLine();
+                ImGui::Button("delete");
+                
+                ImGui::PopID();
+                ImGui::TreePop();
+            }
 
             it++;
         }
     }
 
     ImGui::End();
+    return size;
+}
+
+ImVec2 UIManager::showInstanceProperties() {
+    ImGui::Begin("Instance Properties", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+    ImGui::SetWindowSize(ImVec2(rightPaneWidth, windowHeight-sceneEditorHeight));
+    ImVec2 size = ImGui::GetWindowSize();
+
+    ImGui::End();
+    return size;
 }
 
 

@@ -36,6 +36,11 @@ GLFWwindow* Window::createWindow(int initWidth, int initHeight) {
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
 	// Create the GLFW window.
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	int xpos, ypos, workAreawidth, workAreaheight;

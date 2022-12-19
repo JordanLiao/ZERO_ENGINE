@@ -63,31 +63,34 @@
     <ClCompile Include="src\GameItems\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameItems\Mesh.cpp">
+    <ClCompile Include="src\Graphics\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameItems\Object.cpp">
+    <ClCompile Include="src\Graphics\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResourceTools\ResourceManager.cpp">
+    <ClCompile Include="src\ResourceManagement\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResourceTools\Resources.cpp">
+    <ClCompile Include="src\ResourceManagement\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameItems\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameItems\Instance.cpp">
+    <ClCompile Include="src\Graphics\Instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameItems\LightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\InspectionPlane.cpp">
+    <ClCompile Include="src\Graphics\InspectionPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameItems\ShadowTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,31 +146,34 @@
     <ClInclude Include="src\GameItems\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameItems\Mesh.h">
+    <ClInclude Include="src\Graphics\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameItems\Object.h">
+    <ClInclude Include="src\Graphics\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ResourceTools\ResourceManager.h">
+    <ClInclude Include="src\ResourceManagement\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ResourceTools\Resources.h">
+    <ClInclude Include="src\ResourceManagement\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameItems\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameItems\Instance.h">
+    <ClInclude Include="src\Graphics\Instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameItems\LightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\InspectionPlane.h">
+    <ClInclude Include="src\Graphics\InspectionPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameItems\ShadowTester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

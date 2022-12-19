@@ -5,8 +5,8 @@
 
 #include "Renderer/Renderer.h"
 #include "GameItems/Scene.h"
-#include "ResourceTools/ResourceManager.h"
-#include "GameItems/ShadowTester.h"
+#include "ResourceManagement/ResourceManager.h"
+//#include "GameItems/ShadowTester.h"
 //#include "UIManager.h"
 
 //pre-determined constants for dragging to ensure that when camera zooms out, 
@@ -37,7 +37,7 @@ private:
 	static Scene* currScene;
 
 	/*******************/
-	static ShadowTester * shadowTest;
+	//static ShadowTester * shadowTest;
 	/*******************/
 
 public:

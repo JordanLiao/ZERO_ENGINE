@@ -6,8 +6,8 @@
 #include "../GameItems/Camera.h"
 #include "../Window.h"
 #include "../GameItems/LightSource.h"
-#include "../GameItems/Instance.h"
-#include "../Renderer/InspectionPlane.h"
+#include "../Graphics/Instance.h"
+#include "../Graphics/InspectionPlane.h"
 
 class Renderer {
 private:

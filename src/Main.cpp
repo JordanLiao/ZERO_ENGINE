@@ -58,7 +58,7 @@ void beginTests() {
 
 int main(int argc, char* argv[])
 {
-	int initWidth = 1980;
+	int initWidth = 1920;
 	int initHeight = 1001;
 	
 	GLFWwindow* window = Window::createWindow(initWidth, initHeight);	
