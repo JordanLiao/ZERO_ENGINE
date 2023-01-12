@@ -170,11 +170,13 @@
     <ClCompile Include="src\GameItems\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\EngineApp.cpp" />
+    <ClCompile Include="src\Graphics\Bone.cpp" />
     <ClCompile Include="src\Graphics\Instance.cpp" />
     <ClCompile Include="src\GameItems\LightSource.cpp" />
-    <ClCompile Include="src\Graphics\Node.cpp" />
     <ClCompile Include="src\GameItems\Scene.cpp" />
     <ClCompile Include="src\GameItems\ShadowTester.cpp" />
+    <ClCompile Include="src\Graphics\Node.cpp" />
+    <ClCompile Include="src\Graphics\SkeletalAnimation.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Graphics\Object.cpp" />
@@ -191,6 +193,7 @@
     <ClCompile Include="src\tools\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui_tables.cpp" />
     <ClCompile Include="src\tools\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\tools\MathConverter.cpp" />
     <ClCompile Include="src\UIManager.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -198,6 +201,8 @@
     <ClInclude Include="src\GameItems\Camera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\EngineApp.h" />
+    <ClInclude Include="src\Graphics\SkeletalAnimation.h" />
+    <ClInclude Include="src\Graphics\Bone.h" />
     <ClInclude Include="src\Graphics\Instance.h" />
     <ClInclude Include="src\GameItems\LightSource.h" />
     <ClInclude Include="src\Graphics\Mesh.h" />
@@ -219,6 +224,7 @@
     <ClInclude Include="src\tools\Imgui\imstb_rectpack.h" />
     <ClInclude Include="src\tools\Imgui\imstb_textedit.h" />
     <ClInclude Include="src\tools\Imgui\imstb_truetype.h" />
+    <ClInclude Include="src\tools\MathConverter.h" />
     <ClInclude Include="src\tools\stb_image.h" />
     <ClInclude Include="src\UIManager.h" />
     <ClInclude Include="src\Window.h" />

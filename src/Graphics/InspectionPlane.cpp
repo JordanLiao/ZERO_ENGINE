@@ -4,7 +4,7 @@ InspectionPlane::InspectionPlane() {
 	obj= ResourceManager::loadObject("Assets/InspectionPlane.obj");
 	if (obj == nullptr) {
 		inst = new Instance(obj);
-		std::cout << "Cannot create inspection plane object." << std::endl;
+		std::cerr << "Cannot create inspection plane object." << std::endl;
 	}
 	inst = new Instance(obj);
 

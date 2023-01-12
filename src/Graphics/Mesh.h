@@ -8,10 +8,12 @@ class Mesh {
 public:
 	std::string meshName;
 	Resources::Material* material;
-	GLuint indexOffset; //offset in terms of indices(not vertices) into vao to begin drawing this mesh
+	//offset in terms of indices(not vertices) into vao to begin drawing this mesh
+	GLuint indexOffset;
 	/*size is number of vertices referenced by this mesh's indices; NOTE that this is not the num of vertices
 	in this mesh because identical vertices are joined; its value is 3 * num triangles*/
 	int size; 
+
 
 	/*
 		name: name of the mesh.

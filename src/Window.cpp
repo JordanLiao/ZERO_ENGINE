@@ -12,15 +12,6 @@ double Window::far = 1000.0;
 glm::mat4 Window::projection = glm::mat4(1); // initially set to the identity matrix because window size is unknown, resizecallback()
                                              // would give the projection matrix an actual value.
 
-//legacy code, camera logic used to in window class
-// View Matrix:
-/*glm::vec3 Window::eyePos(0, 0, 7);			// Camera position.
-glm::vec3 Window::lookAtPoint(0, 0, 0);		// The point we are looking at.
-glm::vec3 Window::upVector(0, 1, 0);		// The up direction of the camera.
-glm::mat4 Window::view = glm::lookAt(Window::eyePos, Window::lookAtPoint, Window::upVector);
-glm::vec3 Window::camLeft(-1, 0, 0);        //direction to the left of the camera
-glm::vec3 Window::camRight(1, 0, 0);        //direction to the right of the camera*/
-
 //color picking offscreen framebuffer properties
 GLuint Window::pickingFramebuffer, Window::pickingRenderbuffer, Window::pickingDepthbuffer;
 //shadow map

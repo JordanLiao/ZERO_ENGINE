@@ -24,7 +24,7 @@ private:
 public:
 	Scene();
 	~Scene();
-	void render(glm::mat4 m);
+	void render(glm::mat4 m, uint64_t appDuration);
 	void renderColorCode(glm::mat4 m);
 	void translate(glm::vec3);
 	void rotate(glm::mat4);

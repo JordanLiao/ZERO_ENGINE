@@ -2,12 +2,11 @@
 #define _ENGINEAPP_H_
 
 #include <unordered_map>
+#include <chrono> 
 
 #include "Renderer/Renderer.h"
 #include "GameItems/Scene.h"
 #include "ResourceManagement/ResourceManager.h"
-//#include "GameItems/ShadowTester.h"
-//#include "UIManager.h"
 
 //pre-determined constants for dragging to ensure that when camera zooms out, 
 //dragging speed is increased proportionally.
@@ -25,6 +24,7 @@ class EngineApp {
 private:
 	static GLFWwindow* window;
 
+	static Scene* currScene;
 	static Instance* focusedInstance;
 
 	//mouse/keyboard states
@@ -34,7 +34,7 @@ private:
 	static double prevCursorPosition[2];
 	static bool keyPressed[350];
 
-	static Scene* currScene;
+	static uint64_t appStartTime, appCurrTime, appDuration;
 
 	/*******************/
 	//static ShadowTester * shadowTest;

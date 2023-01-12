@@ -131,38 +131,32 @@ GLint Shader::getUniformLocation(const std::string& uName)
 	return location;
 }
 
-GLuint Shader::getId() const
-{
+GLuint Shader::getId() const{
 	return programID;
 }
 
-bool Shader::setUniformMat4(const std::string& uName, glm::mat4 uValue)
-{
+void Shader::setUniformMat4(const std::string& uName, glm::mat4 uValue){
 	glcheck(glUniformMatrix4fv(getUniformLocation(uName), 1, false, glm::value_ptr(uValue)));
-	return true;
 }
 
-bool Shader::setUniformVec3(const std::string& uName, glm::vec3 uValue)
-{
+void Shader::setUniformVec3(const std::string& uName, glm::vec3 uValue){
 	glcheck(glUniform3fv(getUniformLocation(uName), 1, glm::value_ptr(uValue)));
-	return true;
 }
 
-bool Shader::setUniform1I(const std::string& uName, GLint uValue)
-{
+void Shader::setUniform1I(const std::string& uName, GLint uValue){
 	glcheck(glUniform1i(getUniformLocation(uName), uValue));
-	return true;
 }
 
-bool Shader::setUniorm1F(const std::string& uName, GLfloat uValue)
-{
+void Shader::setUniform1F(const std::string& uName, GLfloat uValue){
 	glcheck(glUniform1f(getUniformLocation(uName), uValue));
-	return true;
 }
 
-bool Shader::setUniorm4F(const std::string& uName, GLfloat uValue0, GLfloat uValue1, GLfloat uValue2, GLfloat uValue3){
+void  Shader::setUniform4F(const std::string& uName, GLfloat uValue0, GLfloat uValue1, GLfloat uValue2, GLfloat uValue3){
 	glcheck(glUniform4f(getUniformLocation(uName), uValue0, uValue1, uValue2, uValue3));
-	return true;
+}
+
+void  Shader::setUniformMat4V(const std::string& uniformName, GLuint count, GLboolean transpose, const GLfloat* value){
+	glcheck(glUniformMatrix4fv(getUniformLocation(uniformName), count, transpose, value));
 }
 
 void Shader::bind() {

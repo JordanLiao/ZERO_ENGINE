@@ -10,7 +10,7 @@
 class Instance {
 public:
 	glm::mat4 model;
-	Object* object; //the geometry that this instance is based on; multiple instances may use the same object
+	Object* object; //the graphics object that this instance is based on; multiple instances may use the same object
 	int colorId;
 	glm::vec3 pos;
 	std::string instanceName;
@@ -22,4 +22,4 @@ public:
 	void translate(glm::vec3 trans);
 };
 
-#endif // !_INSTANCE_H_
+#endif

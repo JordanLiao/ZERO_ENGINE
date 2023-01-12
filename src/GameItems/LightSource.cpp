@@ -2,7 +2,7 @@
 
 LightSource::LightSource(glm::vec3 pos, glm::vec3 dir, lightType t, glm::vec3 c) {
 	position = pos;
-	direction = dir;
+	direction = glm::normalize(dir);
 	type = t;
 	color = c;
 

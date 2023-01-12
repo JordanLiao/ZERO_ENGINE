@@ -12,6 +12,8 @@ double EngineApp::cursorPosition[2] = {0.0, 0.0};
 double EngineApp::prevCursorPosition[2] = {0.0, 0.0};
 bool EngineApp::keyPressed[350];
 
+uint64_t EngineApp::appStartTime, EngineApp::appCurrTime, EngineApp::appDuration;
+
 /************************************************************************************************
 	NOTE!!:
 		Static objects need to have heap allocation using pointer because not every dependency might
@@ -30,6 +32,7 @@ bool EngineApp::initializeProgram(GLFWwindow* w) {
 	Shader* shadowShader = new Shader("src/shaders/shadow.vert", "src/shaders/shadow.frag");
 	Shader* phongTextureShadowShader = new Shader("src/shaders/phongShadow.vert", "src/shaders/phongShadow.frag");
 	Shader* shadowInspectionShader = new Shader("src/shaders/phong.vert", "src/shaders/shadowInspection.frag");
+	Shader* skeletalAnimationShader = new Shader("src/shaders/skeletalAnimation.vert", "src/shaders/phong.frag");
 	
 	Renderer::addShader(shaderRole::phongShader, phongTextureShader);
 	Renderer::addShader(shaderRole::simpleModelShader, simpleShader);
@@ -37,6 +40,11 @@ bool EngineApp::initializeProgram(GLFWwindow* w) {
 	Renderer::addShader(shaderRole::shadowMapShader, shadowShader);
 	Renderer::addShader(shaderRole::phongShadowShader, phongTextureShadowShader);
 	Renderer::addShader(shaderRole::shadowInspectionShader, shadowInspectionShader);
+	Renderer::addShader(shaderRole::skeletalAnimationShader, skeletalAnimationShader);
+
+	appStartTime = (uint64_t)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	appCurrTime = (uint64_t)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	appDuration = appCurrTime - appStartTime;
 
 	return true;
 }
@@ -49,6 +57,8 @@ bool EngineApp::initializeObjects() {
 }
 
 void EngineApp::idleCallback() {
+	appCurrTime = (uint64_t)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	appDuration = appCurrTime - appStartTime;
 	// Perform any necessary updates here
 	if (currentCursorState == cursorState::freeCam) { //move camera in free cam
 		if (keyPressed[GLFW_KEY_W])
@@ -67,7 +77,7 @@ void EngineApp::idleCallback() {
 }
 
 void EngineApp::displayCallback() {
-	currScene->render(glm::mat4(1));
+	currScene->render(glm::mat4(1), appDuration);
 	//shadowTest->render();
 }
 
@@ -169,8 +179,8 @@ void EngineApp::cursor_callback(GLFWwindow* window, double currX, double currY) 
 		}
 		break;
 	case cursorState::freeCam : {
-		cam->rotate(cam->camUp, dx * 0.003);
-		cam->rotate(cam->camLeft, dy * -0.003);
+		cam->rotate(cam->camUp, (float)(dx * 0.003));
+		cam->rotate(cam->camLeft, (float)(dy * -0.003));
 	}
 	default:
 		break;
@@ -187,16 +197,6 @@ void EngineApp::mouse_callback(GLFWwindow* window, int button, int action, int m
 			switch (currentCursorState) {
 			case cursorState::idle:
 				colorPick(cursorPosition[0], cursorPosition[1]);
-				
-				//also in addition to color pick, print the depth map's depth value
-				std::cout << "depth map pixel value: " << Window::getPixelDepthValue(framebuffer::shadowMapFrame, 
-				cursorPosition[0], cursorPosition[1]) << std::endl;
-
-				//print the pixel's color value
-				//glm::vec4 color = Window::getPixel1Value(framebuffer::defaultFrame, cursorPosition[0], cursorPosition[1]);
-				//std::cout << cursorPosition[0] << " " << cursorPosition[1] << " : " << color[0] << " " << color[1] << " " <<
-					//color[2] << std::endl;
-				
 				break;
 			case cursorState::picking:
 				currentCursorState = cursorState::idle;

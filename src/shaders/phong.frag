@@ -26,8 +26,8 @@ out vec4 fragColor;
 
 void main()
 {
-	vec3 lightDir = normalize(-directionalLightDir);
-	vec3 norm = normalize(normalOutput);
+	vec3 lightDir = -directionalLightDir;
+	vec3 norm = normalOutput;
 	
 	//diffuse lighting
 	float diffStrength = max(dot(norm, lightDir), 0.0); // this calculates diffuse intensity based on angle
@@ -35,15 +35,13 @@ void main()
 
 	//specular
 	vec3 viewDir = normalize(viewPos - posOutput);	
-	vec3 reflectDir = reflect(-lightDir, normalOutput);  
+	vec3 reflectDir = reflect(-lightDir, norm);  
 	float spec = 0.0;
 	if(specHighlight > 0.0) { // if specHighlight is < 0, pow might produce undefined result if base is also 0
 		spec = pow(max(dot(viewDir, reflectDir), 0.0), specHighlight);
 	}
 	vec3 specular = spec * specColor * lightColor;  
 	
-	vec3 result = ambientColor * 0.05 * lightColor + diffuse * 1.3 + specular;
-	//vec3 result = ambientColor + diffuse + specular;
+	vec3 result = ambientColor * 0.1  + diffuse + specular;
 	fragColor = vec4(result, 1);
-	//fragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

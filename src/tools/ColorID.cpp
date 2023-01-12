@@ -2,7 +2,7 @@
 
 int ColorID::counter = 3;
 
-int ColorID::getNewId()
-{
+//need to add mutex support!
+int ColorID::getNewId() {
     return counter++;
 }

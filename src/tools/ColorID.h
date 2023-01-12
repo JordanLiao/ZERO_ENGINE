@@ -7,6 +7,7 @@ class ColorID {
 private:
 	static int counter;
 public:
+	//need to add mutex support!
 	static int getNewId();
 };
 

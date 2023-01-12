@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../Core.h"
-#include "Instance.h"
+#include "../Graphics/Instance.h"
 #include "LightSource.h"
 #include "../Renderer/Renderer.h"
 

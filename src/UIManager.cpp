@@ -47,10 +47,10 @@ void UIManager::render() {
     ImGui::SetNextWindowPos(ImVec2(0, menuSize.y));
     ImVec2 resourceDockSize = showResourceDock();
 
-    ImGui::SetNextWindowPos(ImVec2(windowWidth - rightPaneWidth, menuSize.y));
+    ImGui::SetNextWindowPos(ImVec2((float)(windowWidth - rightPaneWidth), menuSize.y));
     ImVec2 sceneEditorSize = showSceneEditor();
 
-    ImGui::SetNextWindowPos(ImVec2(windowWidth - rightPaneWidth, menuSize.y + sceneEditorHeight));
+    ImGui::SetNextWindowPos(ImVec2((float)(windowWidth - rightPaneWidth), menuSize.y + sceneEditorHeight));
     ImVec2 instancePropertiesSize = showInstanceProperties();
     //
 
@@ -68,7 +68,7 @@ ImVec2 UIManager::showTopMenu() {
     ImGui::BeginMainMenuBar();
     ImVec2 size = ImGui::GetWindowSize();
     //
-    ImGui::SetWindowFontScale(1.4);
+    ImGui::SetWindowFontScale(1.4f);
     ImGui::MenuItem("File", NULL);
     ImGui::Spacing();
     ImGui::MenuItem("Edit", NULL);
@@ -81,7 +81,7 @@ ImVec2 UIManager::showTopMenu() {
 
 ImVec2 UIManager::showResourceDock() {
     ImGui::Begin("Resources", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-    ImGui::SetWindowSize(ImVec2(leftPaneWidth, resourceDockHeight));
+    ImGui::SetWindowSize(ImVec2((float)leftPaneWidth, (float)resourceDockHeight));
     ImVec2 size = ImGui::GetWindowSize();
 
     //loading dock
@@ -150,7 +150,7 @@ ImVec2 UIManager::showResourceDock() {
 
 ImVec2 UIManager::showSceneEditor() {
     ImGui::Begin("Scene Editor", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-    ImGui::SetWindowSize(ImVec2(rightPaneWidth, sceneEditorHeight));
+    ImGui::SetWindowSize(ImVec2((float)rightPaneWidth, (float)sceneEditorHeight));
     ImVec2 size = ImGui::GetWindowSize();
 
     static bool displaySceneObjects = true;
@@ -180,7 +180,7 @@ ImVec2 UIManager::showSceneEditor() {
 
 ImVec2 UIManager::showInstanceProperties() {
     ImGui::Begin("Instance Properties", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-    ImGui::SetWindowSize(ImVec2(rightPaneWidth, windowHeight-sceneEditorHeight));
+    ImGui::SetWindowSize(ImVec2((float)rightPaneWidth, (float)windowHeight-sceneEditorHeight));
     ImVec2 size = ImGui::GetWindowSize();
 
     ImGui::End();

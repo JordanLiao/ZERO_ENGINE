@@ -6,19 +6,24 @@ Scene::Scene() {
 	scaleAmount = 1.0f;
 	model = glm::mat4(1);
 
-	light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::directional, glm::vec3(0.9f, 0.9f, 0.9f));
+	light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, -0.5f), lightType::directional, glm::vec3(0.9f, 0.9f, 0.9f));
 	//light = new LightSource(glm::vec3(10.f, 10.f, 0.f), glm::vec3(-1.f, -1.f, 0.f), lightType::point, glm::vec3(0.9f, 0.9f, 0.9f));
 
-	Object* cubes = ResourceManager::loadObject("Assets/cubes.obj");
-
+	//Object* cubes = ResourceManager::loadObject("Assets/cubes.obj");
+	//Object* lowpolypine = ResourceManager::loadObject("Assets/lowpolypine.obj");
+	//Object* lowpolypillar = ResourceManager::loadObject("Assets/lowpolypillar.obj");
 	Object* ground = ResourceManager::loadObject("Assets/ground.obj");
+	//Object* cat = ResourceManager::loadObject("Assets/cat.fbx");
+	//Object* mouse = ResourceManager::loadObject("Assets/mouse.fbx");
+	//mouse->model = glm::scale(glm::vec3(0.01f, 0.01f, 0.01f));
+	//Object* box = ResourceManager::loadObject("Assets/simpleSkin.fbx");
+	Object* bob = ResourceManager::loadObject("Assets/bob.fbx");
+	//instances.push_back(new Instance(box));
+	//Object* dying = ResourceManager::loadObject("Assets/dying.fbx");
+	//instances.push_back(new Instance(dying));
+
 	Instance* groundInst = new Instance(ground);
-	
-	Object* lowpolypine = ResourceManager::loadObject("Assets/lowpolypine.obj");
-	Object* lowpolypillar = ResourceManager::loadObject("Assets/lowpolypillar.obj");
-	
-	glm::mat4 trans = glm::translate(glm::vec3(0.f, 0.f, 0.f));
-	groundInst->model = trans * groundInst->model;
+	groundInst->model = glm::translate(glm::vec3(0.f, 0.f, 0.f)) * groundInst->model;
 	colorCodeMap[groundInst->colorId] = groundInst;
 	instances.push_back(groundInst);
 }
@@ -33,9 +38,12 @@ Scene::~Scene() {
 	}
 }
 
-void Scene::render(glm::mat4 m) {
+void Scene::render(glm::mat4 m, uint64_t appDuration) {
 	glm::mat4 currModel = m * model;
+	double time = (double)appDuration / 1000.0; //time in terms of sec
+	//std::cout << time << std::endl;
 	
+	/*
 	//prep shadow map
 	Window::bindFramebuffer(framebuffer::shadowMapFrame);
 	glcheck(glClear(GL_DEPTH_BUFFER_BIT));
@@ -44,12 +52,20 @@ void Scene::render(glm::mat4 m) {
 		Renderer::drawInstance(instances[i], currModel, shadowMapShader, light);
 	}
 	Window::bindFramebuffer(framebuffer::defaultFrame);
+	*/
 	
 
 	// in the future scene needs to decide which shader to draw which instance
 	glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	for (int i = 0; i < instances.size(); i++) {
-		Renderer::drawInstance(instances[i], currModel, phongShadowShader, light);
+		Instance* inst = instances[i];
+		if (inst->object->boneDataList.size() == 1)
+			Renderer::drawInstance(inst, currModel, phongShader, light);
+		else {
+			inst->object->animations[0]->start(time);
+			inst->object->animations[0]->compute(time);
+			Renderer::drawAnimatedInstance(inst, light, 0);
+		}
 	}
 
 	//-----------debugging purpose----------//

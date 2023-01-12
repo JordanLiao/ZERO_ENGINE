@@ -32,28 +32,21 @@ void setup_callbacks(GLFWwindow* window)
 	glfwSetCursorPosCallback(window, EngineApp::cursor_callback);
 }
 
-void setup_opengl_settings()
-{
+void setup_opengl_settings(){
 	glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LEQUAL);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	//glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
-void print_versions()
-{
+void print_versions() {
 	// Get info of GPU and supported OpenGL version.
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 	std::cout << "OpenGL version supported: " << glGetString(GL_VERSION) << " \n"<<std::endl;
 }
 
 void beginTests() {
-	/*std::unordered_map<std::string, Resources::Material*> * map = ResourceLoaders::loadMaterialMap("Assets/lowpolypine.mtl");
-	if(map != NULL)
-		std::cout << map->size() << std::endl;
-		*/
-	//std::string str("Assets/lowpolypine.mtl");
-	//std::cout << "end of test method." << std::endl;
+
 }
 
 int main(int argc, char* argv[])
@@ -77,11 +70,7 @@ int main(int argc, char* argv[])
 	UIManager ui(window, initWidth, initHeight);
 	ResourceManager::init();
 	
-	while (!glfwWindowShouldClose(window))
-	{
-		// Clear the color and depth buffers
-		//glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-
+	while (!glfwWindowShouldClose(window)) {
 		//updating app state
 		EngineApp::idleCallback();	
 		EngineApp::displayCallback();

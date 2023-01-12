@@ -17,7 +17,7 @@ uniform mat4 lightSpaceMatrix;
 void main()
 {    
     vs_out.fragPos = model * vec4(position, 1.0);
-    vs_out.normal = transpose(inverse(mat3(model))) * normal;
+    vs_out.normal = normalize(transpose(inverse(mat3(model))) * normal);
     vs_out.texCoord = texCoord;
     vs_out.fragPosLightSpace = lightSpaceMatrix * vs_out.fragPos;
     gl_Position = projView * vs_out.fragPos;
