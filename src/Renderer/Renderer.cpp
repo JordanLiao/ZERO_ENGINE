@@ -165,7 +165,7 @@ bool Renderer::prepMaterial(Resources::Material* mat, Shader * shader) {
 	}
 
 	shader->setUniformVec3("ambientColor", mat->ambient);
-	shader->setUniformVec3("diffuseFactor", mat->diffuse);
+	shader->setUniformVec3("diffuseColor", mat->diffuse);
 	shader->setUniformVec3("specColor", mat->specular);
 	shader->setUniform1F("specHighlight", mat->specularFocus);
 	shader->setUniform1F("dissolve", mat->nonTransparency);

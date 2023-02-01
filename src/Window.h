@@ -20,7 +20,7 @@ public:
 	static const char* windowTitle;
 	static int shadowTextureSize;
 
-	static double near, far;
+	static double near, far, fov; //fov is in degree
 	static glm::mat4 projection;
 
 	// Window functions

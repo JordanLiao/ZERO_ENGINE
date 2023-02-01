@@ -9,6 +9,7 @@ const char* Window::windowTitle = "ZeroEngine App";
 //projection matrix
 double Window::near = 0.1;
 double Window::far = 1000.0;
+double Window::fov = 50.0;
 glm::mat4 Window::projection = glm::mat4(1); // initially set to the identity matrix because window size is unknown, resizecallback()
                                              // would give the projection matrix an actual value.
 
@@ -111,7 +112,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 	// Set the viewport size.
 	glcheck(glViewport(0, 0, width, height));
 	// Set the projection matrix.
-	Window::projection = glm::perspective(glm::radians(80.0),
+	Window::projection = glm::perspective(glm::radians(fov),
 		double(width) / (double)height, near, far);
 
 	//update the renderbuffer attached to the offscreen framebuffers

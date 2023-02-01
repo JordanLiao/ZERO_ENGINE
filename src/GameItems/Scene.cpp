@@ -17,15 +17,17 @@ Scene::Scene() {
 	//Object* mouse = ResourceManager::loadObject("Assets/mouse.fbx");
 	//mouse->model = glm::scale(glm::vec3(0.01f, 0.01f, 0.01f));
 	//Object* box = ResourceManager::loadObject("Assets/simpleSkin.fbx");
-	Object* bob = ResourceManager::loadObject("Assets/bob.fbx");
+	//Object* bob = ResourceManager::loadObject("Assets/bob.fbx");
 	//instances.push_back(new Instance(box));
 	//Object* dying = ResourceManager::loadObject("Assets/dying.fbx");
 	//instances.push_back(new Instance(dying));
 
-	Instance* groundInst = new Instance(ground);
+	Object* sphere = ResourceManager::loadObject("Assets/sphere.obj");
+
+	/*Instance* groundInst = new Instance(ground);
 	groundInst->model = glm::translate(glm::vec3(0.f, 0.f, 0.f)) * groundInst->model;
 	colorCodeMap[groundInst->colorId] = groundInst;
-	instances.push_back(groundInst);
+	instances.push_back(groundInst);*/
 }
 
 Scene::~Scene() {
