@@ -1,2 +1,55 @@
-﻿  Window.cpp
+﻿  Camera.cpp
+  Core.cpp
+  EngineApp.cpp
+  Bone.cpp
+  Instance.cpp
+  LightSource.cpp
+  Scene.cpp
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(67,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\csHobby\opengl_folder\GAME_0\src\GameItems\Scene.cpp(68,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ShadowTester.cpp
+  Node.cpp
+  SkeletalAnimation.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\utility(190,16): warning C4244: 'initializing': conversion from 'double' to '_Ty1', possible loss of data
+          with
+          [
+              _Ty1=float
+          ]
+D:\csHobby\opengl_folder\GAME_0\src\Graphics\SkeletalAnimation.cpp(19): message : see reference to function template instantiation 'std::pair<float,glm::vec3>::pair<double&,glm::vec3&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=double &,
+              _Other2=glm::vec3 &
+          ]
+D:\csHobby\opengl_folder\GAME_0\src\Graphics\SkeletalAnimation.cpp(19): message : see reference to function template instantiation 'std::pair<float,glm::vec3>::pair<double&,glm::vec3&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=double &,
+              _Other2=glm::vec3 &
+          ]
+  Main.cpp
+  Mesh.cpp
+  Object.cpp
+  InspectionPlane.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Resources.cpp
+  Shader.cpp
+  ColorID.cpp
+  imgui.cpp
+  Generating Code...
+  Compiling...
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  MathConverter.cpp
+  UIManager.cpp
+  Window.cpp
+  Generating Code...
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\csHobby\opengl_folder\GAME_0\x64\Debug\vc120.pdb'; linking object as if no debug info
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GAME_0.vcxproj -> D:\csHobby\opengl_folder\GAME_0\x64\Debug\GAME_0.exe

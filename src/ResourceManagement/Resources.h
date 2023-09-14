@@ -4,7 +4,7 @@
 #include "../Core.h"
 
 namespace Resources {
-	typedef struct Material{
+	struct Material{
 		std::string materialName;
 		glm::vec3 ambient; //ka
 		glm::vec3 diffuse;  //kd
@@ -17,7 +17,7 @@ namespace Resources {
 		GLuint diffuseTexture; //map_kd
 
 		Material();
-	} Material;
+	};
 }
 
 #endif

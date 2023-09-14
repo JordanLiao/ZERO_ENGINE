@@ -45,7 +45,7 @@ void Scene::render(glm::mat4 m, uint64_t appDuration) {
 	double time = (double)appDuration / 1000.0; //time in terms of sec
 	//std::cout << time << std::endl;
 	
-	/*
+	
 	//prep shadow map
 	Window::bindFramebuffer(framebuffer::shadowMapFrame);
 	glcheck(glClear(GL_DEPTH_BUFFER_BIT));
@@ -54,13 +54,14 @@ void Scene::render(glm::mat4 m, uint64_t appDuration) {
 		Renderer::drawInstance(instances[i], currModel, shadowMapShader, light);
 	}
 	Window::bindFramebuffer(framebuffer::defaultFrame);
-	*/
+	
 	
 
 	// in the future scene needs to decide which shader to draw which instance
 	glcheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	for (int i = 0; i < instances.size(); i++) {
 		Instance* inst = instances[i];
+		Renderer::drawInstance(inst, currModel, phongShader, light);
 		if (inst->object->boneDataList.size() == 1)
 			Renderer::drawInstance(inst, currModel, phongShader, light);
 		else {
